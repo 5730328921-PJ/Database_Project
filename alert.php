@@ -250,35 +250,38 @@
                                         </thead>
 
                                         <tbody>
-                                          <?php
-                                          $q="SELECT * FROM student";
-                                          $result = $mysqli->query($q);
-                                          $total= mysqli_num_rows($result);
-                                          $count =1;
-                                          while($row = $result->fetch_assoc()) {
-                                            if($count%2==0){
-                                            echo "<tr class=\"even pointer\" onclick=\"window.document.location='student.php';\">";
-                                            printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
-                                            printf("<td >%s</td>
-                                                  <td >%s</td>
-                                                  <td >%s</td>
-                                                  <td >%s</td>
-                                                  </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["phoneNO"]);
-                                            echo"</tr>";
-                                            $i++;
+                                            <?php
+                                            $q="select ST.image, ST.studentID, ST.firstName, ST.lastName, sum(D.scorededuction) as scorededuction from student ST, deduct D where ST.studentID = D.studentID group by ST.image, ST.studentID, ST.firstName, ST.lastName";
+                                            $result = $mysqli->query($q);
+                                            $total= mysqli_num_rows($result);
+                                            $count =1;
+                                            while($row = $result->fetch_assoc()) {
+                                                $score = 100 - $row["scorededuction"];
+                                                if ($score < 70) {
+                                                    if($count%2==0){
+                                                        echo "<tr class=\"even pointer\" onclick=\"window.document.location='student.php';\">";
+                                                        printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
+                                                        printf("<td >%s</td>
+                                                            <td >%s</td>
+                                                            <td >%s</td>
+                                                            <td >%s</td>
+                                                            </td>",$row["studentID"],$row["firstName"],$row["lastName"],$score);
+                                                        echo"</tr>";
+                                                        $i++;
+                                                    }
+                                                    else{
+                                                        echo "<tr class=\"odd pointer\" onclick=\"window.document.location='student.php';\">";
+                                                        printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
+                                                        printf("<td >%s</td>
+                                                                <td >%s</td>
+                                                                <td >%s</td>
+                                                                <td >%s</td>
+                                                                </td>",$row["studentID"],$row["firstName"],$row["lastName"],$score);
+                                                        echo"</tr>";
+                                                        $i++;
+                                                    }
+                                                }
                                             }
-                                            else{
-                                              echo "<tr class=\"odd pointer\" onclick=\"window.document.location='student.php';\">";
-                                              printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
-                                              printf("<td >%s</td>
-                                                    <td >%s</td>
-                                                    <td >%s</td>
-                                                    <td >%s</td>
-                                                    </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["phoneNO"]);
-                                              echo"</tr>";
-                                              $i++;
-                                            }
-                                          }
                                             ?>
                                         </tbody>
                                     </table>
