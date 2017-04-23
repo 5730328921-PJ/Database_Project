@@ -131,14 +131,13 @@
                                                 <th class="column-title">Last name</th>
                                                 <th class="column-title">Cause</th>
                                                 <th class="column-title">Date</th>
-                                                <th class="column-title">Time</th>
-                                                <th class="column-title">Note</th>
+                                                <th class="column-title">Period</th>
                                             </tr>
                                         </thead>
 
                                         <tbody>
                                           <?php
-                                          $q="SELECT * FROM student";
+                                          $q="SELECT S.image, S.studentID, S.firstName, S.lastName, A.cause, A.date, A.period FROM student S, absent A WHERE S.studentID = A.studentID";
                                           $result = $mysqli->query($q);
                                           $total= mysqli_num_rows($result);
                                           $count =1;
@@ -152,8 +151,7 @@
                                                   <td >%s</td>
                                                   <td >%s</td>
                                                   <td >%s</td>
-                                                  <td >%s</a>
-                                                  </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["phoneNO"],$row["email"],$row["address"],$row["dateOfBirth"]);
+                                                  </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["cause"],$row["date"],$row["period"]);
                                             echo"</tr>";
                                             $i++;
                                             }
@@ -166,8 +164,7 @@
                                                     <td >%s</td>
                                                     <td >%s</td>
                                                     <td >%s</td>
-                                                    <td >%s</a>
-                                                    </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["phoneNO"],$row["email"],$row["address"],$row["dateOfBirth"]);
+                                                    </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["cause"],$row["date"],$row["period"]);
                                               echo"</tr>";
                                               $i++;
                                             }
