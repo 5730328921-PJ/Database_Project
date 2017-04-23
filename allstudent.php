@@ -115,16 +115,17 @@
                         <div class="x_panel">
                             <div class="x_title">
                                 <h2>All students</h2>
-                                <div class="col-md-5 col-xs-12 " style="margin: 5px 0px 0px 110px">
-                                    <label>
-                                            <input type="checkbox" class="js-switch" name="adviser" /> Adviser
-                                        </label>
-                                </div>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
                                 <br />
-                                <form class="form-horizontal form-label-left" action="searchstudent.php" method="get">
+                                <form class="form-horizontal form-label-left" action="allstudent.php" method="get">
+
+                                    <div class="form-group" style="margin-left: 260px">
+                                    <label>
+                                            <input type="checkbox" class="js-switch" name="adviser" /> Adviser
+                                        </label>
+                                    </div>
 
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">StudentID</label>
@@ -175,11 +176,11 @@
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">GPAX</label>
                                         <div class="col-md-9 col-sm-9 col-xs-12">
                                             <select class="form-control" name="gpax">
-                                                <option>ALL</option>
-                                                <option>0.00 - 1.00</option>
-                                                <option>1.00 - 2.00</option>
-                                                <option>2.00 - 3.00</option>
-                                                <option>3.00 - 4.00</option>
+                                                <option value="">ALL</option>
+                                                <option value="1">0.00 - 1.00</option>
+                                                <option value="2">1.00 - 2.00</option>
+                                                <option value="3">2.00 - 3.00</option>
+                                                <option value="4">3.00 - 4.00</option>
                                             </select>
                                         </div>
                                     </div>
@@ -211,32 +212,73 @@
 
                                     <tbody>
                                       <?php
-                                      $q="SELECT * FROM student";
+                                      $q="SELECT ST.image, ST.studentID, ST.firstName, ST.lastName, A.grade, SU.credits FROM student ST, subject SU, adddrop A WHERE ST.studentID = A.studentID AND SU.subjectID = A.subjectID";
                                       $result = $mysqli->query($q);
-                                      $total= mysqli_num_rows($result);
                                       $count =1;
-                                      while($row = $result->fetch_assoc()) {
-                                        if($count%2==0){
-                                        echo "<tr class=\"even pointer\" onclick=\"window.document.location='student.php';\">";
-                                        printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
-                                        printf("<td >%s</td>
-                                              <td >%s</td>
-                                              <td >%s</td>
-                                              <td >%s</td>
-                                              </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["phoneNO"]);
-                                        echo"</tr>";
-                                        $i++;
-                                        }
-                                        else{
-                                          echo "<tr class=\"odd pointer\" onclick=\"window.document.location='student.php';\">";
-                                          printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
-                                          printf("<td >%s</td>
-                                                <td >%s</td>
-                                                <td >%s</td>
-                                                <td >%s</td>
-                                                </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["phoneNO"]);
-                                          echo"</tr>";
-                                          $i++;
+                                      $total= mysqli_num_rows($result);
+                                      $q2="SELECT image, studentID, firstName, lastName FROM student";
+                                      $result2 = $mysqli->query($q2);
+                                      while($row = $result2->fetch_assoc()) {
+                                        if((strcasecmp($row["studentID"],$_GET["sid"])==0 || $_GET["sid"]=="")
+                                            && (strcasecmp($row["firstName"],$_GET["fname"])==0 || $_GET["fname"]=="")
+                                            && (strcasecmp($row["lastName"],$_GET["lname"])==0 || $_GET["lname"]=="")
+                                            && (strcasecmp($row["sex"], $_GET["sex"]) == 0 || strcasecmp($_GET["sex"], "ALL") == 0)
+                                            && (strcasecmp(substr($row["studentID"], 0, -8), $_GET["year"]) == 0 || $_GET["year"]=="")) {
+                                            $gpax = 0;
+                                            $credits = 0;
+                                            $result->data_seek(0);
+                                            while($row2 = $result->fetch_assoc()) {
+                                                if ($row["studentID"] == $row2["studentID"]) {
+                                                    $grade = -1;
+                                                    if ($row2["grade"] == "A")
+                                                        $grade = 4;
+                                                    else if ($row2["grade"] == "B+")
+                                                        $grade = 3.5;
+                                                    else if ($row2["grade"] == "B")
+                                                        $grade = 3;
+                                                    else if ($row2["grade"] == "C+")
+                                                        $grade = 2.5;
+                                                    else if ($row2["grade"] == "C")
+                                                        $grade = 2;
+                                                    else if ($row2["grade"] == "D+")
+                                                        $grade = 1.5;
+                                                    else if ($row2["grade"] == "D")
+                                                        $grade = 1;
+                                                    else if ($row2["grade"] == "F")
+                                                        $grade = 0;
+                                                    if ($grade != -1) {
+                                                        $gpax += $grade * $row2["credits"];
+                                                        $credits += $row2["credits"];
+                                                    }
+                                                }
+                                            }
+                                            if ($credits != 0)
+                                                $gpax /= $credits;
+
+                                            if (($_GET["gpax"] - $gpax <= 1 && $_GET["gpax"] - $gpax >= 0) || $_GET["gpax"] == 0) {
+                                                if($count%2==0){
+                                                echo "<tr class=\"even pointer\" onclick=\"window.document.location='student.php';\">";
+                                                printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
+                                                printf("<td >%s</td>
+                                                    <td >%s</td>
+                                                    <td >%s</td>
+                                                    <td >%.2f</td>
+                                                    </td>",$row["studentID"],$row["firstName"],$row["lastName"],$gpax);
+                                                echo"</tr>";
+                                                $i++;
+                                                }
+                                                else{
+                                                echo "<tr class=\"odd pointer\" onclick=\"window.document.location='student.php';\">";
+                                                printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
+                                                printf("<td >%s</td>
+                                                        <td >%s</td>
+                                                        <td >%s</td>
+                                                        <td >%.2f</td>
+                                                        </td>",$row["studentID"],$row["firstName"],$row["lastName"],$gpax);
+                                                echo"</tr>";
+                                                $i++;
+                                                }
+                                            }
                                         }
                                       }
                                         ?>

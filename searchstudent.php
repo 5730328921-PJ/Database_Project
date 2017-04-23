@@ -115,16 +115,17 @@
                         <div class="x_panel">
                             <div class="x_title">
                                 <h2>All students</h2>
-                                <div class="col-md-5 col-xs-12 " style="margin: 5px 0px 0px 110px">
-                                    <label>
-                                            <input type="checkbox" class="js-switch" /> Adviser
-                                        </label>
-                                </div>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
                                 <br />
                                 <form class="form-horizontal form-label-left" action="searchstudent.php">
+
+                                    <div class="form-group" style="margin-left: 260px">
+                                    <label>
+                                            <input type="checkbox" class="js-switch" /> Adviser
+                                        </label>
+                                    </div>
 
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">StudentID</label>
@@ -211,7 +212,7 @@
 
                                     <tbody>
                                       <?php
-                                      $q="SELECT * FROM student";
+                                      $q="SELECT ST.image, ST.studentID, ST.firstName, ST.lastName, A.grade, SU.credits FROM student ST, subject SU, adddrop A WHERE ST.studentID = A.studentID AND SU.subjectID = A.subjectID";
                                       $result = $mysqli->query($q);
                                       $total= mysqli_num_rows($result);
                                       $count =1;
@@ -228,7 +229,7 @@
                                                   <td >%s</td>
                                                   <td >%s</td>
                                                   <td >%s</td>
-                                                  </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["phoneNO"]);
+                                                  </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["grade"]);
                                             echo"</tr>";
                                             $i++;
                                             }
