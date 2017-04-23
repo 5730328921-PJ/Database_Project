@@ -138,7 +138,7 @@
 
                                         <tbody>
                                           <?php
-                                          $q="SELECT * FROM student";
+                                          $q="SELECT S.image, S.studentID, S.firstName, S.lastName, D.note, D.scorededuction, D.date, D.time FROM student S, deduct D WHERE S.studentID = D.studentID ORDER BY D.date, D.time ASC";
                                           $result = $mysqli->query($q);
                                           $total= mysqli_num_rows($result);
                                           $count =1;
@@ -153,7 +153,7 @@
                                                   <td >%s</td>
                                                   <td >%s</td>
                                                   <td >%s</td>
-                                                  </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["phoneNO"],$row["email"],$row["address"],$row["dateOfBirth"]);
+                                                  </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["note"],$row["scorededuction"],$row["date"],$row["time"]);
                                             echo"</tr>";
                                             $i++;
                                             }
@@ -167,7 +167,7 @@
                                                     <td >%s</td>
                                                     <td >%s</td>
                                                     <td >%s</td>
-                                                    </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["phoneNO"],$row["email"],$row["address"],$row["dateOfBirth"]);
+                                                    </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["note"],$row["scorededuction"],$row["date"],$row["time"]);
                                               echo"</tr>";
                                               $i++;
                                             }
