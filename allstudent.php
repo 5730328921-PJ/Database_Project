@@ -161,12 +161,12 @@
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Year</label>
                                         <div class="col-md-9 col-sm-9 col-xs-12">
                                             <select class="form-control" name="year">
-                                                <option>ALL</option>
-                                                <option>CP43 (Year 1)</option>
-                                                <option>CP42 (Year 2)</option>
-                                                <option>CP41 (Year 3)</option>
-                                                <option>CP40 (Year 4)</option>
-                                                <option>Master's degree / Ph.D.</option>
+                                                <option value="">ALL</option>
+                                                <option value="59">CP43 (Year 1)</option>
+                                                <option value="58">CP42 (Year 2)</option>
+                                                <option value="57">CP41 (Year 3)</option>
+                                                <option value="56">CP40 (Year 4)</option>
+                                                <option value="00">Master's degree / Ph.D.</option>
                                             </select>
                                         </div>
                                     </div>
