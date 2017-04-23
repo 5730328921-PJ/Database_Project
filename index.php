@@ -25,6 +25,15 @@
     DEFINE('DB_HOST', 'localhost');
     DEFINE('DB_DATABASE', 'CPstudent CARE');
     $mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+    $q = sprintf("SELECT image, pfname, plname FROM teacher WHERE teacherID = \"%s\"", $_GET["login"]);
+    $result = $mysqli->query($q);
+    $count = 1;
+    $total = mysqli_num_rows($result);
+    while ($row = $result->fetch_assoc()) {
+        DEFINE('TEACHER_FIRSTNAME', $row["pfname"]);
+        DEFINE('TEACHER_LASTNAME', $row["plname"]);
+        DEFINE('TEACHER_IMAGE', $row["image"]);
+    }
    ?>
 
     <div class="container body">
@@ -43,7 +52,10 @@
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
-                            <h2>Prof.Proadpran Punyabukkana</h2>
+                            <!--<h2>Prof.Proadpran Punyabukkana</h2>-->
+                            <h2><?php
+                                printf("%s %s", TEACHER_FIRSTNAME, TEACHER_LASTNAME);
+                            ?></h2>
                         </div>
                     </div>
                     <!-- /menu profile quick info -->
@@ -89,7 +101,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="images/Prof-PP.jpg" alt="">Prof.Proadpran Punyabukkana
+                                    <img src="images/Prof-PP.jpg" alt=""><?php printf("%s %s", TEACHER_FIRSTNAME, TEACHER_LASTNAME); ?>
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">

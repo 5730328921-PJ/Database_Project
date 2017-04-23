@@ -30,16 +30,16 @@
       <div class="login_wrapper">
         <div class="animate form login_form">
           <section class="login_content">
-            <form>
+            <form action="security.php" method="get">
               <h1>Login</h1>
               <div>
-                <input type="text" class="form-control" placeholder="Username" required="" />
+                <input type="text" class="form-control" placeholder="Username" required="" name="login"/>
               </div>
               <div>
-                <input type="password" class="form-control" placeholder="Password" required="" />
+                <input type="password" class="form-control" placeholder="Password" required="" name="password"/>
               </div>
               <div>
-                <a class="btn btn-default submit" href="index.php">Log in</a>
+                <button type="submit" class="btn btn-default submit">Log in</button>
               </div>
 
               <div class="clearfix"></div>
