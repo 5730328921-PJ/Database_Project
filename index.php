@@ -131,13 +131,14 @@
                                                 <th class="column-title">Last name</th>
                                                 <th class="column-title">Cause</th>
                                                 <th class="column-title">Date</th>
-                                                <th class="column-title">Period</th>
+                                                <th class="column-title">Time</th>
+                                                <th class="column-title">Note</th>
                                             </tr>
                                         </thead>
 
                                         <tbody>
                                           <?php
-                                          $q="SELECT S.image, S.studentID, S.firstName, S.lastName, A.cause, A.date, A.period FROM student S, absent A WHERE S.studentID = A.studentID";
+                                          $q="SELECT * FROM student";
                                           $result = $mysqli->query($q);
                                           $total= mysqli_num_rows($result);
                                           $count =1;
@@ -151,7 +152,8 @@
                                                   <td >%s</td>
                                                   <td >%s</td>
                                                   <td >%s</td>
-                                                  </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["cause"],$row["date"],$row["period"]);
+                                                  <td >%s</td>
+                                                  </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["phoneNO"],$row["email"],$row["address"],$row["dateOfBirth"]);
                                             echo"</tr>";
                                             $i++;
                                             }
@@ -164,7 +166,8 @@
                                                     <td >%s</td>
                                                     <td >%s</td>
                                                     <td >%s</td>
-                                                    </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["cause"],$row["date"],$row["period"]);
+                                                    <td >%s</td>
+                                                    </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["phoneNO"],$row["email"],$row["address"],$row["dateOfBirth"]);
                                               echo"</tr>";
                                               $i++;
                                             }
@@ -199,54 +202,40 @@
                                         </thead>
 
                                         <tbody>
-                                            <tr class="even pointer">
-                                                <td class=" "><img src="images/5730279821-img.jpg" style="width:60px;height:60px;"></td>
-                                                <td class=" ">5730279821</td>
-                                                <td class=" ">Terapap</td>
-                                                <td class=" ">Apiparakoon</td>
-                                                <td class=" ">12:36 AM</td>
-                                                <td class=" ">06/04/2017</td>
-                                                <td class=" ">2 weeks</td>
-                                            </tr>
-                                            <tr class="odd pointer">
-                                                <td class=" "><img src="images/5730282621-img.jpg" style="width:60px;height:60px;"></td>
-                                                <td class=" ">5730282621</td>
-                                                <td class=" ">Nonthiwat</td>
-                                                <td class=" ">Visuthikraisee</td>
-                                                <td class=" ">12:37 AM</td>
-                                                <td class=" ">06/04/2017</td>
-                                                <td class=" ">2 weeks</td>
-                                            </tr>
-                                            <tr class="even pointer">
-                                                <td class=" "><img src="images/5731018521-img.jpg" style="width:60px;height:60px;"></td>
-                                                <td class=" ">5731018521</td>
-                                                <td class=" ">Chiran</td>
-                                                <td class=" ">Bawornkitiwong</td>
-                                                <td class=" ">12:38 AM</td>
-                                                <td class=" ">07/04/2017</td>
-                                                <td class=" ">2 weeks</a>
-                                                </td>
-                                            </tr>
-                                            <tr class="odd pointer">
-                                                <td class=" "><img src="images/5730328921-img.jpg" style="width:60px;height:60px;"></td>
-                                                <td class=" ">5730328921</td>
-                                                <td class=" ">Prin</td>
-                                                <td class=" ">Jitsaereetham</td>
-                                                <td class=" ">12:42 AM</td>
-                                                <td class=" ">08/04/2017</td>
-                                                <td class=" ">1 week</a>
-                                                </td>
-                                            </tr>
-                                            <tr class="even pointer">
-                                                <td class=" "><img src="images/5730295821-img.jpg" style="width:60px;height:60px;"></td>
-                                                <td class=" ">5730295821</td>
-                                                <td class=" ">Nawinda</td>
-                                                <td class=" ">Boonpralome</td>
-                                                <td class=" ">12:45 AM</td>
-                                                <td class=" ">08/04/2017</td>
-                                                <td class=" ">2 weeks</a>
-                                                </td>
-                                            </tr>
+                                            <?php
+                                            $q="SELECT S.image, S.studentID, S.firstName, S.lastName, A.cause, A.date, A.period FROM student S, absent A WHERE S.studentID = A.studentID";
+                                            $result = $mysqli->query($q);
+                                            $total= mysqli_num_rows($result);
+                                            $count =1;
+                                            while($row = $result->fetch_assoc()) {
+                                                if($count%2==0){
+                                                    echo "<tr class=\"even pointer\" onclick=\"window.document.location='student.php';\">";
+                                                    printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
+                                                    printf("<td >%s</td>
+                                                        <td >%s</td>
+                                                        <td >%s</td>
+                                                        <td >%s</td>
+                                                        <td >%s</td>
+                                                        <td >%s</td>
+                                                        </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["cause"],$row["date"],$row["period"]);
+                                                    echo"</tr>";
+                                                    $i++;
+                                                }
+                                                else{
+                                                    echo "<tr class=\"odd pointer\" onclick=\"window.document.location='student.php';\">";
+                                                    printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
+                                                    printf("<td >%s</td>
+                                                            <td >%s</td>
+                                                            <td >%s</td>
+                                                            <td >%s</td>
+                                                            <td >%s</td>
+                                                            <td >%s</td>
+                                                            </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["cause"],$row["date"],$row["period"]);
+                                                    echo"</tr>";
+                                                    $i++;
+                                                }
+                                            }
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>
