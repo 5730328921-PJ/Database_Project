@@ -83,7 +83,7 @@
                                             $q = sprintf("SELECT DISTINCT S.subjectID, S.subjectName FROM teach T, subject S WHERE T.teacherID = %s and T.subjectID = S.subjectID", TEACHER_ID);
                                             $result = $mysqli->query($q);
                                             while ($row = $result->fetch_assoc()) {
-                                                printf("<li><a href=\"subject.php\">%s %s</a></li>", $row["subjectID"], $row["subjectName"]);
+                                                printf("<li><a href=\"subject.php?login=%s\">%s %s</a></li>", $_GET["login"],$row["subjectID"], $row["subjectName"]);
                                             }
                                         ?>
                                         <!--<li><a href="subject.php">2301710 DATABASE</a></li>

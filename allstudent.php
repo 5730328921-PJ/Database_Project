@@ -45,7 +45,9 @@
             <div class="col-md-3 left_col menu_fixed">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="index.php" class="site_title"><i class="glyphicon glyphicon-cog"></i> <span>CPstudent CARE</span></a>
+                        <?php
+                            printf("<a href=\"index.php?login=%s\" class=\"site_title\"><i class=\"glyphicon glyphicon-cog\"></i> <span>CPstudent CARE</span></a>", $_GET["login"]);
+                        ?>
                     </div>
 
                     <div class="clearfix"></div>
@@ -83,10 +85,10 @@
                                 <li><a><i class="fa fa-pencil"></i>COURSES<span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <?php
-                                            $q = sprintf("SELECT DISTINCT S.subjectID, S.subjectName FROM teach T, subject S WHERE T.teacherID = %s and T.subjectID = S.subjectID", $_GET["login"]);
+                                            $q = sprintf("SELECT DISTINCT S.subjectID, S.subjectName FROM teach T, subject S WHERE T.teacherID = %s and T.subjectID = S.subjectID", TEACHER_ID);
                                             $result = $mysqli->query($q);
                                             while ($row = $result->fetch_assoc()) {
-                                                printf("<li><a href=\"subject.php\">%s %s</a></li>", $row["subjectID"], $row["subjectName"]);
+                                                printf("<li><a href=\"subject.php?login=%s\">%s %s</a></li>", $_GET["login"],$row["subjectID"], $row["subjectName"]);
                                             }
                                         ?>
                                         <!--<li><a href="subject.php">2301710 DATABASE</a></li>
