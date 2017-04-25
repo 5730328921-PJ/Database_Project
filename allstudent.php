@@ -94,7 +94,7 @@
                                     </ul>
                                 </li>
 
-                                <li><a href="alert.php"><i class="fa fa-frown-o"></i>ALERT</a>
+                                <?php printf("<li><a href=\"alert.php?login=%s\"><i class=\"fa fa-frown-o\"></i>ALERT</a>", $_GET["login"]); ?>
                                     <ul class="nav child_menu">
                                     </ul>
                                 </li>

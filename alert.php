@@ -37,6 +37,17 @@
     DEFINE('DB_HOST', 'localhost');
     DEFINE('DB_DATABASE', 'CPstudent CARE');
     $mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+
+    $q = sprintf("SELECT teacherID, image, pfname, plname FROM teacher WHERE login = \"%s\"", $_GET["login"]);
+    $result = $mysqli->query($q);
+    $count = 1;
+    $total = mysqli_num_rows($result);
+    while ($row = $result->fetch_assoc()) {
+        DEFINE('TEACHER_FIRSTNAME', $row["pfname"]);
+        DEFINE('TEACHER_LASTNAME', $row["plname"]);
+        DEFINE('TEACHER_IMAGE', $row["image"]);
+        DEFINE('TEACHER_ID', $row["teacherID"]);
+    }
    ?>
 
     <div class="container body">
@@ -44,7 +55,9 @@
             <div class="col-md-3 left_col menu_fixed">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="index.php" class="site_title"><i class="glyphicon glyphicon-cog"></i> <span>student CARE</span></a>
+                        <?php
+                            printf("<a href=\"index.php?login=%s\" class=\"site_title\"><i class=\"glyphicon glyphicon-cog\"></i> <span>student CARE</span></a>", $_GET["login"]);
+                        ?>
                     </div>
 
                     <div class="clearfix"></div>
@@ -52,11 +65,12 @@
                     <!-- menu profile quick info -->
                     <div class="profile clearfix">
                         <div class="profile_pic">
-                            <img src="images/Prof-PP.jpg" alt="..." class="img-circle profile_img">
+                            <?php printf("<img src=\"images/%s.jpg\" alt=\"...\" class=\"img-circle profile_img\">", TEACHER_IMAGE); ?>
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
-                            <h2>Prof.Proadpran Punyabukkana</h2>
+                            <?php printf("%s %s", TEACHER_FIRSTNAME, TEACHER_LASTNAME); ?>
+                            <!--<h2>Prof.Proadpran Punyabukkana</h2>-->
                         </div>
                     </div>
                     <!-- /menu profile quick info -->
@@ -67,20 +81,26 @@
                     <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                         <div class="menu_section">
                             <ul class="nav side-menu">
-                                <li><a href="index.php"><i class="fa fa-bar-chart"></i>HOME</a>
+                                <li>
+                                    <?php printf("<a href=\"index.php?login=%s\"><i class=\"fa fa-bar-chart\"></i>HOME</a>", $_GET["login"]); ?>
                                     <ul class="nav child_menu">
                                     </ul>
                                 </li>
-                                <li><a href="allstudent.php"><i class="fa fa-user"></i>STUDENTS</a>
+                                <li>
+                                    <?php printf("<a href=\"allstudent.php?login=%s\"><i class=\"fa fa-user\"></i>STUDENTS</a>", $_GET["login"]); ?>
                                 </li>
                                 <li><a><i class="fa fa-pencil"></i>COURSES<span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="subject.php">2301710 DATABASE</a></li>
-                                        <li><a href="#">2110513 ASSISTIVE TECHNOLOGY</a></li>
+                                        <?php
+                                            $q = "";
+                                        ?>
+                                        <!--<li><a href="subject.php">2301710 DATABASE</a></li>
+                                        <li><a href="#">2110513 ASSISTIVE TECHNOLOGY</a></li>-->
                                     </ul>
                                 </li>
 
-                                <li><a href="alert.php"><i class="fa fa-frown-o"></i>ALERT</a>
+                                <li>
+                                    <?php printf("<a href=\"alert.php\"><i class=\"fa fa-frown-o\"></i>ALERT</a>", $_GET["login"]); ?>
                                     <ul class="nav child_menu">
                                     </ul>
                                 </li>

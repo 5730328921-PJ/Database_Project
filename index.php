@@ -80,7 +80,7 @@
                                 <li><a><i class="fa fa-pencil"></i>COURSES<span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <?php
-                                            $q = sprintf("SELECT DISTINCT S.subjectID, S.subjectName FROM teach T, subject S WHERE T.teacherID = %s and T.subjectID = S.subjectID", $_GET["login"]);
+                                            $q = sprintf("SELECT DISTINCT S.subjectID, S.subjectName FROM teach T, subject S WHERE T.teacherID = %s and T.subjectID = S.subjectID", TEACHER_ID);
                                             $result = $mysqli->query($q);
                                             while ($row = $result->fetch_assoc()) {
                                                 printf("<li><a href=\"subject.php\">%s %s</a></li>", $row["subjectID"], $row["subjectName"]);
@@ -91,7 +91,8 @@
                                     </ul>
                                 </li>
 
-                                <li><a href="alert.php"><i class="fa fa-frown-o"></i>ALERT</a>
+                                <li>
+                                    <?php printf("<a href=\"alert.php?login=%s\"><i class=\"fa fa-frown-o\"></i>ALERT</a>", $_GET["login"]); ?>
                                     <ul class="nav child_menu">
                                     </ul>
                                 </li>
