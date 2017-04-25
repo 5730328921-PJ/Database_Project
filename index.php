@@ -25,7 +25,8 @@
     DEFINE('DB_HOST', 'localhost');
     DEFINE('DB_DATABASE', 'CPstudent CARE');
     $mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
-    $q = sprintf("SELECT image, pfname, plname FROM teacher WHERE teacherID = \"%s\"", $_GET["login"]);
+
+    $q = sprintf("SELECT teacherID, image, pfname, plname FROM teacher WHERE login = \"%s\"", $_GET["login"]);
     $result = $mysqli->query($q);
     $count = 1;
     $total = mysqli_num_rows($result);
@@ -33,6 +34,7 @@
         DEFINE('TEACHER_FIRSTNAME', $row["pfname"]);
         DEFINE('TEACHER_LASTNAME', $row["plname"]);
         DEFINE('TEACHER_IMAGE', $row["image"]);
+        DEFINE('TEACHER_ID', $row["teacherID"]);
     }
    ?>
 
@@ -74,6 +76,13 @@
                                 </li>
                                 <li><a><i class="fa fa-pencil"></i>COURSES<span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
+                                        <?php
+                                            $q = sprintf("SELECT DISTINCT S.subjectID, S.subjectName FROM teach T, subject S WHERE T.teacherID = %s and T.subjectID = S.subjectID", $_GET["login"]);
+                                            $result = $mysqli->query($q);
+                                            while ($row = $result->fetch_assoc()) {
+                                                printf("<li><a href=\"subject.php\">%s %s</a></li>", $row["subjectID"], $row["subjectName"]);
+                                            }
+                                        ?>
                                         <li><a href="subject.php">2301710 DATABASE</a></li>
                                         <li><a href="#">2110513 ASSISTIVE TECHNOLOGY</a></li>
                                     </ul>
@@ -155,24 +164,12 @@
                                           $total= mysqli_num_rows($result);
                                           $count =1;
                                           while($row = $result->fetch_assoc()) {
-                                            if($count%2==0){
-                                            echo "<tr class=\"even pointer\" onclick=\"window.document.location='student.php';\">";
-                                            printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
-                                            printf("<td >%s</td>
-                                                  <td >%s</td>
-                                                  <td >%s</td>
-                                                  <td >%s</td>
-                                                  <td >%s</td>
-                                                  <td >%s</td>
-                                                  <td >%s</td>
-                                                  </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["note"],$row["scorededuction"],$row["date"],$row["time"]);
-                                            echo"</tr>";
-                                            $i++;
-                                            }
-                                            else{
-                                              echo "<tr class=\"odd pointer\" onclick=\"window.document.location='student.php';\">";
-                                              printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
-                                              printf("<td >%s</td>
+                                            $timediff = (strtotime(date("Y-m-d")) - strtotime($row["date"])) / (60 * 60 * 24); 
+                                            if ($timediff <= 7 && $timediff >= 0) {
+                                                if($count%2==0){
+                                                echo "<tr class=\"even pointer\" onclick=\"window.document.location='student.php';\">";
+                                                printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
+                                                printf("<td >%s</td>
                                                     <td >%s</td>
                                                     <td >%s</td>
                                                     <td >%s</td>
@@ -180,8 +177,23 @@
                                                     <td >%s</td>
                                                     <td >%s</td>
                                                     </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["note"],$row["scorededuction"],$row["date"],$row["time"]);
-                                              echo"</tr>";
-                                              $i++;
+                                                echo"</tr>";
+                                                $i++;
+                                                }
+                                                else{
+                                                echo "<tr class=\"odd pointer\" onclick=\"window.document.location='student.php';\">";
+                                                printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
+                                                printf("<td >%s</td>
+                                                        <td >%s</td>
+                                                        <td >%s</td>
+                                                        <td >%s</td>
+                                                        <td >%s</td>
+                                                        <td >%s</td>
+                                                        <td >%s</td>
+                                                        </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["note"],$row["scorededuction"],$row["date"],$row["time"]);
+                                                echo"</tr>";
+                                                $i++;
+                                                }
                                             }
                                           }
                                             ?>
@@ -207,44 +219,47 @@
                                                 <th class="column-title">Student ID</th>
                                                 <th class="column-title">First Name</th>
                                                 <th class="column-title">Last name</th>
-                                                <th class="column-title">Date</th>
                                                 <th class="column-title">Cause</th>
+                                                <th class="column-title">Date</th>
                                                 <th class="column-title">Period</th>
                                             </tr>
                                         </thead>
 
                                         <tbody>
                                             <?php
-                                            $q="SELECT S.image, S.studentID, S.firstName, S.lastName, A.cause, A.date, A.period FROM student S, absent A WHERE S.studentID = A.studentID";
+                                            $q="SELECT S.image, S.studentID, S.firstName, S.lastName, A.cause, A.date, A.period FROM student S, absent A WHERE S.studentID = A.studentID ORDER BY A.date, A.period ASC";
                                             $result = $mysqli->query($q);
                                             $total= mysqli_num_rows($result);
                                             $count =1;
                                             while($row = $result->fetch_assoc()) {
-                                                if($count%2==0){
-                                                    echo "<tr class=\"even pointer\" onclick=\"window.document.location='student.php';\">";
-                                                    printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
-                                                    printf("<td >%s</td>
-                                                        <td >%s</td>
-                                                        <td >%s</td>
-                                                        <td >%s</td>
-                                                        <td >%s</td>
-                                                        <td >%s</td>
-                                                        </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["cause"],$row["date"],$row["period"]);
-                                                    echo"</tr>";
-                                                    $i++;
-                                                }
-                                                else{
-                                                    echo "<tr class=\"odd pointer\" onclick=\"window.document.location='student.php';\">";
-                                                    printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
-                                                    printf("<td >%s</td>
+                                                $timediff = (strtotime($row["date"]) - strtotime(date("Y-m-d"))) / (60 * 60 * 24);
+                                                if ($timediff <= 7 && $timediff >= 0) {
+                                                    if($count%2==0){
+                                                        echo "<tr class=\"even pointer\" onclick=\"window.document.location='student.php';\">";
+                                                        printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
+                                                        printf("<td >%s</td>
                                                             <td >%s</td>
                                                             <td >%s</td>
                                                             <td >%s</td>
                                                             <td >%s</td>
                                                             <td >%s</td>
                                                             </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["cause"],$row["date"],$row["period"]);
-                                                    echo"</tr>";
-                                                    $i++;
+                                                        echo"</tr>";
+                                                        $i++;
+                                                    }
+                                                    else{
+                                                        echo "<tr class=\"odd pointer\" onclick=\"window.document.location='student.php';\">";
+                                                        printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
+                                                        printf("<td >%s</td>
+                                                                <td >%s</td>
+                                                                <td >%s</td>
+                                                                <td >%s</td>
+                                                                <td >%s</td>
+                                                                <td >%s</td>
+                                                                </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["cause"],$row["date"],$row["period"]);
+                                                        echo"</tr>";
+                                                        $i++;
+                                                    }
                                                 }
                                             }
                                             ?>
