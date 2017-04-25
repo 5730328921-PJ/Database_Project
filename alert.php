@@ -123,7 +123,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="images/Prof-PP.jpg" alt="">Prof.Proadpran Punyabukkana
+                                    <?php printf("<img src=\"images/%s.jpg\" alt=\"\">Prof.Proadpran Punyabukkana", TEACHER_IMAGE); ?>
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
