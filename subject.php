@@ -89,10 +89,10 @@
                                 <li><a><i class="fa fa-pencil"></i>COURSES<span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <?php
-                                            $q = sprintf("SELECT DISTINCT S.subjectID, S.subjectName FROM teach T, subject S WHERE T.teacherID = %s and T.subjectID = S.subjectID", TEACHER_ID);
+                                            $q = sprintf("SELECT DISTINCT S.subjectID, S.subjectName, T.sectionNo FROM teach T, subject S WHERE T.teacherID = %s and T.subjectID = S.subjectID", TEACHER_ID);
                                             $result = $mysqli->query($q);
                                             while ($row = $result->fetch_assoc()) {
-                                                printf("<li><a href=\"subject.php?login=%s\">%s %s</a></li>", $_GET["login"],$row["subjectID"], $row["subjectName"]);
+                                                printf("<li><a href=\"subject.php?login=%s&subjectID=%s&subjectName=%s&sectionNo=%s\">%s %s (SEC %s)</a></li>", $_GET["login"], $row["subjectID"], $row["subjectName"], $row["sectionNo"], $row["subjectID"], $row["subjectName"], $row["sectionNo"]);
                                             }
                                         ?>
                                         <!--<li><a href="#">2301710 DATABASE</a></li>
@@ -148,7 +148,12 @@
                 <div class="row tile_count">
                     </br>
                     </br>
-                    <h1>&nbsp;2301710 DATABASE &nbsp;(SEC33)</h1>
+                    <h1>
+                        <?php
+                            printf("&nbsp;%s %s &nbsp;(SEC %s)", $_GET["subjectID"], $_GET["subjectName"], $_GET["sectionNo"]);
+                        ?>
+                    </h1>
+                    <!--<h1>&nbsp;2301710 DATABASE &nbsp;(SEC33)</h1>-->
                     <div class="col-md-2 col-sm-12 col-xs-12" style="margin: 5px 0px 0px 20px">
                         <a class="btn btn-info"></i>Download syllabus</a>
                     </div>

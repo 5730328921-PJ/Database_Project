@@ -85,10 +85,10 @@
                                 <li><a><i class="fa fa-pencil"></i>COURSES<span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <?php
-                                            $q = sprintf("SELECT DISTINCT S.subjectID, S.subjectName FROM teach T, subject S WHERE T.teacherID = %s and T.subjectID = S.subjectID", TEACHER_ID);
+                                            $q = sprintf("SELECT DISTINCT S.subjectID, S.subjectName, T.sectionNo FROM teach T, subject S WHERE T.teacherID = %s and T.subjectID = S.subjectID", TEACHER_ID);
                                             $result = $mysqli->query($q);
                                             while ($row = $result->fetch_assoc()) {
-                                                printf("<li><a href=\"subject.php?login=%s\">%s %s</a></li>", $_GET["login"],$row["subjectID"], $row["subjectName"]);
+                                                printf("<li><a href=\"subject.php?login=%s&subjectID=%s&subjectName=%s&sectionNo=%s\">%s %s (SEC %s)</a></li>", $_GET["login"], $row["subjectID"], $row["subjectName"], $row["sectionNo"], $row["subjectID"], $row["subjectName"], $row["sectionNo"]);
                                             }
                                         ?>
                                         <!--<li><a href="subject.php">2301710 DATABASE</a></li>
