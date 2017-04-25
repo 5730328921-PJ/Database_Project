@@ -69,7 +69,9 @@
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
-                            <?php printf("%s %s", TEACHER_FIRSTNAME, TEACHER_LASTNAME); ?>
+                            <h2><?php
+                                printf("%s %s", TEACHER_FIRSTNAME, TEACHER_LASTNAME);
+                            ?></h2>
                             <!--<h2>Prof.Proadpran Punyabukkana</h2>-->
                         </div>
                     </div>
@@ -123,7 +125,11 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <?php printf("<img src=\"images/%s.jpg\" alt=\"\">Prof.Proadpran Punyabukkana", TEACHER_IMAGE); ?>
+                                    <?php
+                                        printf("<img src=\"images/%s.jpg\" alt=\"\">", TEACHER_IMAGE);
+                                        printf("%s %s", TEACHER_FIRSTNAME, TEACHER_LASTNAME);
+                                        // Prof.Proadpran Punyabukkana
+                                    ?>
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
