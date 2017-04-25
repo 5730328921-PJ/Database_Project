@@ -27,6 +27,17 @@
     DEFINE('DB_HOST', 'localhost');
     DEFINE('DB_DATABASE', 'CPstudent CARE');
     $mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+
+    $q = sprintf("SELECT teacherID, image, pfname, plname FROM teacher WHERE login = \"%s\"", $_GET["login"]);
+    $result = $mysqli->query($q);
+    $count = 1;
+    $total = mysqli_num_rows($result);
+    while ($row = $result->fetch_assoc()) {
+        DEFINE('TEACHER_FIRSTNAME', $row["pfname"]);
+        DEFINE('TEACHER_LASTNAME', $row["plname"]);
+        DEFINE('TEACHER_IMAGE', $row["image"]);
+        DEFINE('TEACHER_ID', $row["teacherID"]);
+    }
    ?>
 
     <div class="container body">
@@ -42,11 +53,14 @@
                     <!-- menu profile quick info -->
                     <div class="profile clearfix">
                         <div class="profile_pic">
-                            <img src="images/Prof-PP.jpg" alt="..." class="img-circle profile_img">
+                            <?php printf("<img src=\"images/%s.jpg\" alt=\"...\" class=\"img-circle profile_img\">", TEACHER_IMAGE); ?>
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
-                            <h2>Prof.Proadpran Punyabukkana</h2>
+                            <!--<h2>Prof.Proadpran Punyabukkana</h2>-->
+                            <h2><?php
+                                printf("%s %s", TEACHER_FIRSTNAME, TEACHER_LASTNAME);
+                            ?></h2>
                         </div>
                     </div>
                     <!-- /menu profile quick info -->
@@ -57,8 +71,10 @@
                     <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                         <div class="menu_section">
                             <ul class="nav side-menu">
-
-                                <li><a href="index.php"><i class="fa fa-bar-chart"></i>HOME</a>
+                                <?php
+                                    printf("<li><a href=\"index.php?login=%s\"><i class=\"fa fa-bar-chart\"></i>HOME</a>", $_GET["login"]);
+                                ?>
+                                <!--<li><a href="index.php"><i class="fa fa-bar-chart"></i>HOME</a>-->
                                     <ul class="nav child_menu">
                                     </ul>
                                 </li>
@@ -66,8 +82,15 @@
                                 </li>
                                 <li><a><i class="fa fa-pencil"></i>COURSES<span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="subject.php">2301710 DATABASE</a></li>
-                                        <li><a href="#">2110513 ASSISTIVE TECHNOLOGY</a></li>
+                                        <?php
+                                            $q = sprintf("SELECT DISTINCT S.subjectID, S.subjectName FROM teach T, subject S WHERE T.teacherID = %s and T.subjectID = S.subjectID", $_GET["login"]);
+                                            $result = $mysqli->query($q);
+                                            while ($row = $result->fetch_assoc()) {
+                                                printf("<li><a href=\"subject.php\">%s %s</a></li>", $row["subjectID"], $row["subjectName"]);
+                                            }
+                                        ?>
+                                        <!--<li><a href="subject.php">2301710 DATABASE</a></li>
+                                        <li><a href="#">2110513 ASSISTIVE TECHNOLOGY</a></li>-->
                                     </ul>
                                 </li>
 
@@ -94,7 +117,8 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="images/Prof-PP.jpg" alt="">Prof.Proadpran Punyabukkana
+                                    <?php printf("<img src=\"images/%s.jpg\" alt=\"\">", TEACHER_IMAGE); ?>
+                                    <?php printf("%s %s", TEACHER_FIRSTNAME, TEACHER_LASTNAME); ?>
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -120,6 +144,7 @@
                             <div class="x_content">
                                 <br />
                                 <form class="form-horizontal form-label-left" action="allstudent.php" method="get">
+                                    <input type="hidden" name="login" value=<?php printf("\"%s\"", $_GET["login"]); ?>>
 
                                     <div class="form-group" style="margin-left: 260px">
                                     <label>

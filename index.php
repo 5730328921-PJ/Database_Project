@@ -50,7 +50,7 @@
                     <!-- menu profile quick info -->
                     <div class="profile clearfix">
                         <div class="profile_pic">
-                            <img src="images/Prof-PP.jpg" class="img-circle profile_img">
+                            <?php printf("<img src=\"images/%s.jpg\" class=\"img-circle profile_img\">", TEACHER_IMAGE); ?>
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
@@ -72,7 +72,10 @@
                                     <ul class="nav child_menu">
                                     </ul>
                                 </li>
-                                <li><a href="allstudent.php"><i class="fa fa-user"></i>STUDENTS</a>
+                                <?php
+                                    printf("<li><a href=\"allstudent.php?login=%s\"><i class=\"fa fa-user\"></i>STUDENTS</a>", $_GET["login"]);
+                                ?>
+                                <!--<li><a href="allstudent.php"><i class="fa fa-user"></i>STUDENTS</a>-->
                                 </li>
                                 <li><a><i class="fa fa-pencil"></i>COURSES<span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
@@ -83,8 +86,8 @@
                                                 printf("<li><a href=\"subject.php\">%s %s</a></li>", $row["subjectID"], $row["subjectName"]);
                                             }
                                         ?>
-                                        <li><a href="subject.php">2301710 DATABASE</a></li>
-                                        <li><a href="#">2110513 ASSISTIVE TECHNOLOGY</a></li>
+                                        <!--<li><a href="subject.php">2301710 DATABASE</a></li>
+                                        <li><a href="#">2110513 ASSISTIVE TECHNOLOGY</a></li>-->
                                     </ul>
                                 </li>
 
@@ -110,7 +113,8 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="images/Prof-PP.jpg" alt=""><?php printf("%s %s", TEACHER_FIRSTNAME, TEACHER_LASTNAME); ?>
+                                    <?php printf("<img src=\"images/%s.jpg\" alt=\"\">", TEACHER_IMAGE);?>
+                                    <?php printf("%s %s", TEACHER_FIRSTNAME, TEACHER_LASTNAME); ?>
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -151,9 +155,9 @@
                                                 <th class="column-title">First name</th>
                                                 <th class="column-title">Last name</th>
                                                 <th class="column-title">Cause</th>
+                                                <th class="column-title">Score Deducted</th>
                                                 <th class="column-title">Date</th>
                                                 <th class="column-title">Time</th>
-                                                <th class="column-title">Note</th>
                                             </tr>
                                         </thead>
 
@@ -173,7 +177,7 @@
                                                     <td >%s</td>
                                                     <td >%s</td>
                                                     <td >%s</td>
-                                                    <td >%s</td>
+                                                    <td >-%s</td>
                                                     <td >%s</td>
                                                     <td >%s</td>
                                                     </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["note"],$row["scorededuction"],$row["date"],$row["time"]);
@@ -187,7 +191,7 @@
                                                         <td >%s</td>
                                                         <td >%s</td>
                                                         <td >%s</td>
-                                                        <td >%s</td>
+                                                        <td >-%s</td>
                                                         <td >%s</td>
                                                         <td >%s</td>
                                                         </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["note"],$row["scorededuction"],$row["date"],$row["time"]);
@@ -221,7 +225,7 @@
                                                 <th class="column-title">Last name</th>
                                                 <th class="column-title">Cause</th>
                                                 <th class="column-title">Date</th>
-                                                <th class="column-title">Period</th>
+                                                <th class="column-title">Period (days)</th>
                                             </tr>
                                         </thead>
 
