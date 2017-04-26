@@ -71,7 +71,10 @@
                     <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                         <div class="menu_section">
                             <ul class="nav side-menu">
-                                <li><a><i class="fa fa-bar-chart"></i>HOME</a>
+                                <li>
+                                    <?php
+                                        printf("<a href=\"index.php?login=%s\"><i class=\"fa fa-bar-chart\"></i>HOME</a>", $_GET["login"]);
+                                    ?>
                                     <ul class="nav child_menu">
                                     </ul>
                                 </li>

@@ -80,7 +80,10 @@
                                     <ul class="nav child_menu">
                                     </ul>
                                 </li>
-                                <li><a><i class="fa fa-user"></i>STUDENTS</a>
+                                <li>
+                                    <?php
+                                        printf("<li><a href=\"allstudent.php?login=%s\"><i class=\"fa fa-user\"></i>STUDENTS</a>", $_GET["login"]);
+                                    ?>
                                 </li>
                                 <li><a><i class="fa fa-pencil"></i>COURSES<span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
