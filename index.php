@@ -76,10 +76,9 @@
                                     </ul>
                                 </li>
                                 <?php
-                                    printf("<li><a href=\"allstudent.php?login=%s\"><i class=\"fa fa-user\"></i>STUDENTS</a>", $_GET["login"]);
+                                    printf("<li><a href=\"allstudent.php?login=%s\"><i class=\"fa fa-user\"></i>STUDENTS</a></li>", $_GET["login"]);
                                 ?>
                                 <!--<li><a href="allstudent.php"><i class="fa fa-user"></i>STUDENTS</a>-->
-                                </li>
                                 <li><a><i class="fa fa-pencil"></i>COURSES<span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <?php

@@ -107,13 +107,10 @@
                                     <ul class="nav child_menu">
                                     </ul>
                                 </li>
-                                <li><a><i class="fa fa-user"></i>STUDENTS<span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <?php
-                                            printf("<li><a href=\"allstudent.php?login=%s\">ALL</a></li>", $_GET["login"]);
-                                        ?>
-                                        <li><a href="#">ADVISED</a></li>
-                                    </ul>
+                                </li>
+                                    <?php
+                                        printf("<li><a href=\"allstudent.php?login=%s\"><i class=\"fa fa-user\"></i>STUDENTS</a>", $_GET["login"]);
+                                    ?>
                                 </li>
                                 <li><a><i class="fa fa-pencil"></i>COURSES<span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
@@ -251,12 +248,24 @@
                                     </div>
 
                                     <div class="col-md-12 col-sm-12 col-xs-12" style="margin: 20px 0px 0px 0px">
-                                        <div class="alert alert-danger alert-dismissible fade in" role="alert">
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-                                        </button>
-                                            <strong>Warning ! </strong> Your behavioral-score was crisis because your score
-                                            is under 50.<br> Please contact adviser as soon as possible.<br>
-                                        </div>
+                                        <?php
+                                            $q = sprintf("SELECT ST.studentID, sum(D.scorededuction) as scorededuction FROM student ST, deduct D WHERE ST.studentID = %s and ST.studentID = D.studentID GROUP BY ST.studentID", STUDENT_ID);
+                                            $result = $mysqli->query($q);
+                                            $total= mysqli_num_rows($result);
+                                            $count = 1;
+                                            while($row = $result->fetch_assoc()) {
+                                                $score = 100 - $row["scorededuction"];
+                                                if ($score < 50) {
+                                                    printf("<div class=\"alert alert-danger alert-dismissible fade in\" role=\"alert\">
+                                                        <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">
+                                                            <span aria-hidden=\"true\">×</span>
+                                                        </button>
+                                                        <strong>Warning ! </strong> Your behavioral-score was crisis because your score
+                                                        is under 50.<br> Please contact adviser as soon as possible.<br>
+                                                    </div>");
+                                                }
+                                            }
+                                        ?>
                                     </div>
 
                                     <div class="col-md-12 col-sm-12 col-xs-12" style="margin: 0px 0px 0px 0px">
@@ -280,7 +289,9 @@
                                                                     <div class="x_title">
                                                                         <h2> GPA <small>( IN EACH TERM )</small></h2>
                                                                         <div class="col-md-1 col-sm-12 col-xs-12" style="margin: 4px 0px 5px 60px">
-                                                                            <button type="button" class="btn btn-success btn-sm">Status: normal</button>
+                                                                            <?php
+                                                                                printf("<button type=\"button\" class=\"btn btn-success btn-sm\">Status: %s</button>", ucfirst(STUDENT_STATUS));
+                                                                            ?>
                                                                         </div>
                                                                         <div class="col-md-1 col-sm-12 col-xs-12" style="margin: 4px 0px 5px 60px">
                                                                             <button type="button" class="btn btn-info btn-sm">Year 3: Major subject was clear</button>
