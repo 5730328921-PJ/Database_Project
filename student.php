@@ -384,18 +384,46 @@
                                         <ul class="messages">
                                             <li>
                                                 <div class="col-md-5 col-sm-12 col-xs-12" style="margin: 20px 0px 0px 0px">
-                                                    <a class="btn btn-primary"></i>ENG DRAW</a>
+                                                    <?php
+                                                        $q = sprintf("SELECT ST.studentID, SU.subjectName, A.semester, A.grade FROM student ST, adddrop A, subject SU WHERE ST.studentID = %s and A.subjectID = SU.subjectID", STUDENT_ID);;
+                                                        $result = $mysqli->query($q);
+                                                        $count = 1;
+                                                        $total = mysqli_num_rows($result);
+                                                        while ($row = $result->fetch_assoc()) {
+                                                            list($year, $semester) = explode("/", $row["semester"]);
+                                                            if (strpos(" A+B+C+D+", $row["grade"]) != false
+                                                                && $year == STUDENT_ENTYEAR - 1
+                                                                && $semester == 1)
+                                                                printf("<a class=\"btn btn-primary\"></i>%s: %s</a>", $row["subjectName"], $row["grade"]);
+                                                        }
+                                                    ?>
+                                                    <!--<a class="btn btn-primary"></i>ENG DRAW</a>
                                                     <a class="btn btn-primary"></i>CALCULUS I</a>
                                                     <a class="btn btn-primary"></i>GEN CHEM</a>
                                                     <a class="btn btn-primary"></i>GEN CHEM LAB</a>
                                                     <a class="btn btn-primary"></i>GEN PHY I</a>
                                                     <a class="btn btn-primary"></i>GEN PHY LAB I</a>
-                                                    <a class="btn btn-primary"></i>EXP ENG I</a>
+                                                    <a class="btn btn-primary"></i>EXP ENG I</a>-->
                                                 </div>
                                                 <div class="col-md-1 col-sm-12 col-xs-12" style="margin: 20px 0px 0px 0px">
                                                     <div class="message_wrapper">
                                                         <blockquote>|</blockquote>
                                                     </div>
+                                                </div>
+                                                <div class="col-md-5 col-sm-12 col-xs-12" style="margin: 20px 0px 0px 0px">
+                                                    <?php
+                                                        $q = sprintf("SELECT DISTINCT ST.studentID, SU.subjectName, A.semester, A.grade FROM student ST, adddrop A, subject SU WHERE ST.studentID = %s and A.subjectID = SU.subjectID", STUDENT_ID);;
+                                                        $result = $mysqli->query($q);
+                                                        $count = 1;
+                                                        $total = mysqli_num_rows($result);
+                                                        while ($row = $result->fetch_assoc()) {
+                                                            list($year, $semester) = explode("/", $row["semester"]);
+                                                            if (strpos(" A+B+C+D+", $row["grade"]) == false
+                                                                && $year == STUDENT_ENTYEAR - 1
+                                                                && $semester == 1)
+                                                                printf("<a class=\"btn btn-primary\"></i>%s: %s</a>", $row["subjectName"], $row["grade"]);
+                                                        }
+                                                    ?>
                                                 </div>
                                             </li>
                                         </ul>
