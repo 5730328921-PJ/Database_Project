@@ -266,7 +266,7 @@
                                                 </li>
                                                 <li role="presentation" class=""><a href="#tab_content2" role="tab" class="profile-tab2" data-toggle="tab" aria-expanded="false">Activities</a>
                                                 </li>
-                                                <li role="presentation" class=""><a href="#tab_content2" role="tab" class="profile-tab3" data-toggle="tab" aria-expanded="false">Awards</a>
+                                                <li role="presentation" class=""><a href="#tab_content3" role="tab" class="profile-tab3" data-toggle="tab" aria-expanded="false">Awards</a>
                                                 </li>
                                             </ul>
                                             <div id="myTabContent" class="tab-content">
@@ -302,14 +302,28 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>#</th>
-                                                                <th>Project Name</th>
-                                                                <th>Client Company</th>
-                                                                <th class="hidden-phone">Hours Spent</th>
-                                                                <th>Contribution</th>
+                                                                <th>Activity Name</th>
+                                                                <th>Place</th>
+                                                                <th>Date</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
+                                                            <?php
+                                                                $q = sprintf("SELECT A.*, P.* FROM activity A, participatea P WHERE P.studentID = %s and A.activityName = P.activityName", STUDENT_ID);
+                                                                $result = $mysqli->query($q);
+                                                                $count = 1;
+                                                                $total = mysqli_num_rows($result);
+                                                                while ($row = $result->fetch_assoc()) {
+                                                                    printf("<tr>");
+                                                                    printf("<td>%s</td>", $count);
+                                                                    printf("<td>%s</td>", $row["activityName"]);
+                                                                    printf("<td>%s</td>", $row["place"]);
+                                                                    printf("<td>%s</td>", $row["date"]);
+                                                                    printf("</tr>");
+                                                                    $count++;
+                                                                }
+                                                            ?>
+                                                            <!--<tr>
                                                                 <td>1</td>
                                                                 <td>New Company Takeover Review</td>
                                                                 <td>Deveint Inc</td>
@@ -319,51 +333,42 @@
                                                                         <div class="progress-bar progress-bar-success" data-transitiongoal="35"></div>
                                                                     </div>
                                                                 </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>2</td>
-                                                                <td>New Partner Contracts Consultanci</td>
-                                                                <td>Deveint Inc</td>
-                                                                <td class="hidden-phone">13</td>
-                                                                <td class="vertical-align-mid">
-                                                                    <div class="progress">
-                                                                        <div class="progress-bar progress-bar-danger" data-transitiongoal="15"></div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>3</td>
-                                                                <td>Partners and Inverstors report</td>
-                                                                <td>Deveint Inc</td>
-                                                                <td class="hidden-phone">30</td>
-                                                                <td class="vertical-align-mid">
-                                                                    <div class="progress">
-                                                                        <div class="progress-bar progress-bar-success" data-transitiongoal="45"></div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>4</td>
-                                                                <td>New Company Takeover Review</td>
-                                                                <td>Deveint Inc</td>
-                                                                <td class="hidden-phone">28</td>
-                                                                <td class="vertical-align-mid">
-                                                                    <div class="progress">
-                                                                        <div class="progress-bar progress-bar-success" data-transitiongoal="75"></div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
+                                                            </tr>-->
                                                         </tbody>
                                                     </table>
                                                     <!-- end user projects -->
 
                                                 </div>
                                                 <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
-                                                    <p>xxFood truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin
-                                                        coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings
-                                                        next level wes anderson artisan four loko farm-to-table craft beer
-                                                        twee. Qui photo booth letterpress, commodo enim craft beer mlkshk
-                                                    </p>
+                                                    <table class="data table table-striped no-margin">
+                                                            <thread>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>Competition Name</th>
+                                                                <th>Award</th>
+                                                                <th>Place</th>
+                                                                <th>Date</th>
+                                                            </tr>
+                                                        </thread>
+                                                        <tbody>
+                                                            <?php
+                                                                $q = sprintf("SELECT C.*, P.* FROM competition C, participatec P WHERE P.studentID = %s and C.competitionName = P.competitionName", STUDENT_ID);
+                                                                $result = $mysqli->query($q);
+                                                                $count = 1;
+                                                                $total = mysqli_num_rows($result);
+                                                                while ($row = $result->fetch_assoc()) {
+                                                                    printf("<tr>");
+                                                                    printf("<td>%s</td>", $count);
+                                                                    printf("<td>%s</td>", $row["competitionName"]);
+                                                                    printf("<td>%s</td>", $row["award"]);
+                                                                    printf("<td>%s</td>", $row["place"]);
+                                                                    printf("<td>%s</td>", $row["competitionDate"]);
+                                                                    printf("</tr>");
+                                                                    $count++;
+                                                                }
+                                                            ?>
+                                                        </tbody>
+                                                    </table>
                                                 </div>
                                             </div>
                                         </div>
