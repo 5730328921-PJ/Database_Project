@@ -35,6 +35,31 @@
         DEFINE('TEACHER_IMAGE', $row["image"]);
         DEFINE('TEACHER_ID', $row["teacherID"]);
     }
+
+    $q = sprintf("SELECT *, S.image as studentImage FROM student S, major M, teacher T WHERE S.studentID = %s and S.majorID = M.majorID and S.teacherID = T.teacherID", $_GET["studentID"]);
+    $result = $mysqli->query($q);
+    $count = 1;
+    $total = mysqli_num_rows($result);
+    while ($row = $result->fetch_assoc()) {
+        DEFINE('STUDENT_IMAGE', $row["studentImage"]);
+        DEFINE('STUDENT_ID', $row["studentID"]);
+        DEFINE('STUDENT_FIRSTNAME', $row["firstName"]);
+        DEFINE('STUDENT_LASTNAME', $row["lastName"]);
+        DEFINE('STUDENT_PHONENO', $row["phoneNO"]);
+        DEFINE('STUDENT_EMAIL', $row["email"]);
+        DEFINE('STUDENT_ADDRESS', $row["address"]);
+        DEFINE('STUDENT_DATEOFBIRTH', $row["dateOfBirth"]);
+        DEFINE('STUDENT_STATUS', $row["status"]);
+        DEFINE('STUDENT_ENTYEAR', $row["entyear"]);
+        DEFINE('STUDENT_MAJORID', $row["majorID"]);
+        DEFINE('STUDENT_MAJORNAME', $row["name"]);
+        DEFINE('STUDENT_TEACHERID', $row["teacherID"]);
+        DEFINE('STUDENT_UNIVERSITY', $row["university"]);
+        DEFINE('STUDENT_SEX', $row["sex"]);
+        DEFINE('STUDENT_ADVISETEACHER_FIRSTNAME', $row["pfname"]);
+        DEFINE('STUDENT_ADVISETEACHER_LASTNAME', $row["plname"]);
+        DEFINE('STUDENT_YEAR', substr(STUDENT_ID, 0, -8));
+    }
    ?>
    
     <div class="container body">
@@ -163,43 +188,64 @@
                                         <div class="profile_img">
                                             <div id="crop-avatar">
                                                 <!-- Current avatar -->
-                                                <img class="img-responsive avatar-view" src="images/5730279821-img.jpg" alt="Avatar" title="Change the avatar">
+                                                <?php
+                                                    printf("<img class=\"img-responsive avatar-view\" src=\"images/%s.jpg\" alt=\"Avatar\" title=\"Change the avatar\">", STUDENT_IMAGE);
+                                                ?>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="col-md-8 col-sm-3 col-xs-12" style="margin: 10px 0px 0px 15px">
-                                        <h3>Terapap Apiparakoon</h3>
+                                        <h3>
+                                            <?php
+                                                printf("%s %s", STUDENT_FIRSTNAME, STUDENT_LASTNAME);
+                                            ?>
+                                        </h3>
+                                        <!--<h3>Terapap Apiparakoon</h3>-->
                                         <ul class="list-unstyled user_data">
                                             <div class="col-md-6 col-sm-7 col-xs-12" style="margin: 10px 0px 0px 0px">
-                                                <p>National ID: 1101402074066<br> Sex: Male<br> Birthday: 8 August 1995<br>Country:
+                                                <p>
+                                                    <?php
+                                                        printf("Status: %s<br>Sex: %s<br>Student ID: %s<br>Birthday: %s<br>", STUDENT_STATUS, STUDENT_SEX, STUDENT_ID, date("j F Y", strtotime(STUDENT_DATEOFBIRTH)));
+                                                        printf("Phone No: %s<br>Email: %s<br>Address: %s<br>", STUDENT_PHONENO, STUDENT_EMAIL, STUDENT_ADDRESS);
+                                                        printf("Advise Teacher: %s %s<br>", STUDENT_ADVISETEACHER_FIRSTNAME, STUDENT_ADVISETEACHER_LASTNAME);
+                                                    ?>
+                                                </p>
+                                                <!--<p>National ID: 1101402074066<br> Sex: Male<br> Birthday: 8 August 1995<br>Country:
                                                     Thailand
                                                     <br> Email: mixtelecom8@gmail.com<br> Father name: Krit Apiparakoon
                                                     <br> Mother name: Montip Karnjanamai<br> Status: Single<br> Blood group:
                                                     B
                                                     <br>Tel: 080-080-3827<br>
-                                                </p>
+                                                </p>-->
                                             </div>
                                             <div class="col-md-6 col-sm-5 col-xs-12" style="margin: 10px 0px 0px 0px">
-                                                <p>University: Chulalongkorn<br> Faculty: Engineering<br> Entrance Day: 31 June
+                                                <p>
+                                                    <?php
+                                                        printf("University: %s<br>Faculty: %s<br>", STUDENT_UNIVERSITY, STUDENT_MAJORNAME);
+                                                        printf("Entrance Year: %s<br>", STUDENT_ENTYEAR);
+                                                        printf( "Year: %s<br>", (date("Y") - STUDENT_ENTYEAR) + ((date("m") > 7) ? 1 : 0));
+                                                    ?>
+                                                    <!--University: Chulalongkorn<br> Faculty: Engineering<br> Entrance Day: 31 June
                                                     2014
                                                     <br> Day: 31 June 2018<br> Major: Computer Engineering<br> Year: 3
-                                                    <br></p>
+                                                    <br>-->
+                                                </p>
                                             </div>
 
                                             <div class="col-md-12 col-sm-12 col-xs-12" style="margin: 10px 0px 0px 0px">
-                                                <li><i class="fa fa-map-marker user-profile-icon"></i> 2004 Prachasongkhro Rd,
-                                                    DinDang, Bangkok 10400 Thailand.
-                                                </li>
+                                                <!--<li>
+                                                    <i class="fa fa-map-marker user-profile-icon"></i> 2004 Prachasongkhro Rd, DinDang, Bangkok 10400 Thailand.
+                                                </li>-->
 
                                                 <li>
                                                     <i class="fa fa-briefcase user-profile-icon"></i> Computer Engineering
                                                 </li>
 
-                                                <li class="m-top-xs">
+                                                <!--<li class="m-top-xs">
                                                     <i class="fa fa-external-link user-profile-icon"></i>
                                                     <a href="www.terakale8.wordpress.com" target="_blank">www.terakale8.wordpress.com</a>
-                                                </li>
+                                                </li>-->
                                         </ul>
                                         </div>
                                     </div>

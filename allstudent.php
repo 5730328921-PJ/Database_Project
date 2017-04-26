@@ -284,7 +284,7 @@
 
                                             if (($_GET["gpax"] - $gpax <= 1 && $_GET["gpax"] - $gpax >= 0) || $_GET["gpax"] == 0) {
                                                 if($count%2==0){
-                                                echo "<tr class=\"even pointer\" onclick=\"window.document.location='student.php';\">";
+                                                printf("<tr class=\"even pointer\" onclick=\"window.document.location='student.php?login=%s&studentID=%s';\">", $_GET["login"], $row["studentID"]);
                                                 printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
                                                 printf("<td >%s</td>
                                                     <td >%s</td>
@@ -295,7 +295,7 @@
                                                 $i++;
                                                 }
                                                 else{
-                                                echo "<tr class=\"odd pointer\" onclick=\"window.document.location='student.php';\">";
+                                                printf("<tr class=\"odd pointer\" onclick=\"window.document.location='student.php?login=%s&studentID=%s';\">", $_GET["login"], $row["studentID"]);
                                                 printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
                                                 printf("<td >%s</td>
                                                         <td >%s</td>

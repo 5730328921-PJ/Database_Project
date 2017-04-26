@@ -20,6 +20,9 @@
 
 <body class="nav-md">
   <?php
+    if ($_GET["login"] == null)
+        echo "<meta http-equiv=\"refresh\" content=\"0;url=login.php\" />";
+
     DEFINE('DB_USERNAME', 'root');
     DEFINE('DB_PASSWORD', 'root');
     DEFINE('DB_HOST', 'localhost');
