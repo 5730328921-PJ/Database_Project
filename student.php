@@ -416,7 +416,7 @@
                                                     <?php
                                                         printf("University: %s<br>Faculty: %s<br>", STUDENT_UNIVERSITY, STUDENT_MAJORNAME);
                                                         printf("Entrance Year: %s<br>", STUDENT_ENTYEAR);
-                                                        printf( "Year: %s<br>", (date("Y") - STUDENT_ENTYEAR) + ((date("m") > 7) ? 1 : 0));
+                                                        printf( "Year: %s<br>", ((date("Y") - STUDENT_ENTYEAR) + ((date("m") > 7) ? 1 : 0)) > 4 ? "Graduated" : (date("Y") - STUDENT_ENTYEAR) + ((date("m") > 7) ? 1 : 0));
                                                     ?>
                                                     <!--University: Chulalongkorn<br> Faculty: Engineering<br> Entrance Day: 31 June
                                                     2014
