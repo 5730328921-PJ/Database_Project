@@ -277,7 +277,7 @@
                                                 }
                                             }
                                             if (!$count)
-                                                printf("<td><td><td><td>NO RECENT DEDUCTED STUDENT<td><td><td></td></td></td></td></td></td></td>");
+                                                printf("<td><td><td><td>NO RECENT ABSENTED STUDENT<td><td><td></td></td></td></td></td></td></td>");
                                             ?>
                                         </tbody>
                                     </table>
