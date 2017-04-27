@@ -236,7 +236,7 @@
                                                 </li>-->
 
                                                 <li>
-                                                    <i class="fa fa-briefcase user-profile-icon"></i> Computer Engineering
+                                                    <i class="fa fa-briefcase user-profile-icon"></i><?php printf(" %s", STUDENT_MAJORNAME); ?>
                                                 </li>
 
                                                 <!--<li class="m-top-xs">
