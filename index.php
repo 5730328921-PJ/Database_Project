@@ -83,6 +83,90 @@
         }
     }
 
+    $q = "SELECT S.entyear, A.grade, SU.credits FROM student S, adddrop A, subject SU WHERE S.studentID = A.studentID and A.subjectID = SU.subjectID";
+    $result = $mysqli->query($q);
+    $count = 1;
+    $total = mysqli_num_rows($result);
+
+    $gpax1 = 0;
+    $gpax2 = 0;
+    $gpax3 = 0;
+    $gpax4 = 0;
+    $credits1 = 0;
+    $credits2 = 0;
+    $credits3 = 0;
+    $credits4 = 0;
+
+    while ($row = $result->fetch_assoc()) {
+        $grade = -1;
+        if ($row["grade"] == "A")
+            $grade = 4;
+        else if ($row["grade"] == "B+")
+            $grade = 3.5;
+        else if ($row["grade"] == "B")
+            $grade = 3;
+        else if ($row["grade"] == "C+")
+            $grade = 2.5;
+        else if ($row["grade"] == "C")
+            $grade = 2;
+        else if ($row["grade"] == "D+")
+            $grade = 1.5;
+        else if ($row["grade"] == "D")
+            $grade = 1;
+        else if ($row["grade"] == "F")
+            $grade = 0;
+
+        if ($grade != -1) {
+            $year = (date("Y") - $row["entyear"]) + ((date("m") > 7) ? 1 : 0);
+            if ($year == 1) {
+                $gpax1 += $grade * $row["credits"];
+                $credits1 += $row["credits"];
+            }
+            else if ($year == 2) {
+                $gpax2 += $grade * $row["credits"];
+                $credits2 += $row["credits"];
+            }
+            else if ($year == 3) {
+                $gpax3 += $grade * $row["credits"];
+                $credits3 += $row["credits"];
+            }
+            else if ($year == 4) {
+                $gpax4 += $grade * $row["credits"];
+                $credits4 += $row["credits"];
+            }
+        }
+    }
+    if ($credits1 != 0)
+        $gpax1 /= $credits1;
+    if ($credits2 != 0)
+        $gpax2 /= $credits2;
+    if ($credits3 != 0)
+        $gpax3 /= $credits3;
+    if ($credits4 != 0)
+        $gpax4 /= $credits4;
+
+    $q = "SELECT S.entyear, count(P.award) as award FROM student S, participatec P WHERE S.studentID = P.studentID GROUP BY S.entyear";
+    $result = $mysqli->query($q);
+    $count = 1;
+    $total = mysqli_num_rows($result);
+
+    $award1 = 0;
+    $award2 = 0;
+    $award3 = 0;
+    $award4 = 0;
+
+    while ($row = $result->fetch_assoc()) {
+        $year = (date("Y") - $row["entyear"]) + ((date("m") > 7) ? 1 : 0);
+        if ($year == 1)
+            $award1 = $row["award"];
+        else if ($year == 2)
+            $award2 = $row["award"];
+        else if ($year == 3)
+            $award3 = $row["award"];
+        else if ($year == 4)
+            $award4 = $row["award"];
+    }
+
     //Year 1
     print("<script type=\"text/javascript\">
         window.onload = function () {
@@ -103,7 +187,7 @@
             type: \"pie\",
             showInLegend: false,
             toolTipContent: \"{name}: <strong>{y}</strong>\",
-            indexLabel: \"{name} {y}%\",
+            indexLabel: \"{name} {y}\",
             dataPoints: [");
 
             printf("{  y: %d, name: \"Male\", exploded: true}," , $m1);
@@ -131,8 +215,8 @@
         {
             type: \"pie\",
             showInLegend: false,
-            toolTipContent: \"{name}: <strong>{y}%</strong>\",
-            indexLabel: \"{name} {y}%\",
+            toolTipContent: \"{name}: <strong>{y}</strong>\",
+            indexLabel: \"{name} {y}\",
             dataPoints: [");
 
             printf("{  y: %d, name: \"Male\", exploded: true}," , $m2);
@@ -160,8 +244,8 @@
         {
             type: \"pie\",
             showInLegend: false,
-            toolTipContent: \"{name}: <strong>{y}%</strong>\",
-            indexLabel: \"{name} {y}%\",
+            toolTipContent: \"{name}: <strong>{y}</strong>\",
+            indexLabel: \"{name} {y}\",
             dataPoints: [");
 
             printf("{  y: %d, name: \"Male\", exploded: true}," , $m3);
@@ -189,8 +273,8 @@
         {
             type: \"pie\",
             showInLegend: false,
-            toolTipContent: \"{name}: <strong>{y}%</strong>\",
-            indexLabel: \"{name} {y}%\",
+            toolTipContent: \"{name}: <strong>{y}</strong>\",
+            indexLabel: \"{name} {y}\",
             dataPoints: [");
 
             printf("{  y: %d, name: \"Male\", exploded: true}," , $m4);
@@ -222,15 +306,22 @@
                 type: \"column\",
                 name: \"GPAX\",
                 showInLegend: true,
-                dataPoints:[
-                {label: \"Year1 Term1\", y: 3.24},
-                {label: \"Year1 Term2\", y: 2.89},
-                {label: \"Year2 Term1\", y: 3.15},
-                {label: \"Year2 Term2\", y: 2.35},
-                {label: \"Year3 Term1\", y: 2.79},
-                {label: \"Year3 Term2\", y: 2.35},
-                {label: \"Year4 Term1\", y: 3.07},
-                {label: \"Year4 Term2\", y: 3.18},
+                dataPoints:[");
+
+                    printf("{label: \"Year 1\", y: %.2f},", $gpax1);
+                    printf("{label: \"Year 2\", y: %.2f},", $gpax2);
+                    printf("{label: \"Year 3\", y: %.2f},", $gpax3);
+                    printf("{label: \"Year 4\", y: %.2f},", $gpax4);
+                    print("
+
+                    // {label: \"Year1 Term1\", y: 3.24},
+                    // {label: \"Year1 Term2\", y: 2.89},
+                    // {label: \"Year2 Term1\", y: 3.15},
+                    // {label: \"Year2 Term2\", y: 2.35},
+                    // {label: \"Year3 Term1\", y: 2.79},
+                    // {label: \"Year3 Term2\", y: 2.35},
+                    // {label: \"Year4 Term1\", y: 3.07},
+                    // {label: \"Year4 Term2\", y: 3.18},
 
                 ]
             },
@@ -273,15 +364,22 @@
                 type: \"column\",
                 name: \"Number of award\",
                 showInLegend: true,
-                dataPoints:[
-                {label: \"Year1 Term1\", y: 3},
-                {label: \"Year1 Term2\", y: 2},
-                {label: \"Year2 Term1\", y: 2},
-                {label: \"Year2 Term2\", y: 4},
-                {label: \"Year3 Term1\", y: 5},
-                {label: \"Year3 Term2\", y: 4},
-                {label: \"Year4 Term1\", y: 3},
-                {label: \"Year4 Term2\", y: 6},
+                dataPoints:[");
+
+                    printf("{label: \"Year 1\", y: %d},", $award1);
+                    printf("{label: \"Year 2\", y: %d},", $award2);
+                    printf("{label: \"Year 3\", y: %d},", $award3);
+                    printf("{label: \"Year 4\", y: %d},", $award4);
+                    print("
+
+                // {label: \"Year1 Term1\", y: 3},
+                // {label: \"Year1 Term2\", y: 2},
+                // {label: \"Year2 Term1\", y: 2},
+                // {label: \"Year2 Term2\", y: 4},
+                // {label: \"Year3 Term1\", y: 5},
+                // {label: \"Year3 Term2\", y: 4},
+                // {label: \"Year4 Term1\", y: 3},
+                // {label: \"Year4 Term2\", y: 6},
 
                 ]
             },
@@ -312,7 +410,11 @@
             <div class="col-md-3 left_col menu_fixed">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="index.php" class="site_title"><i class="glyphicon glyphicon-cog"></i> <span>CPstudent CARE</span></a>
+                        <?php
+                            printf("<a href=\"index.php?login=%s\" class=\"site_title\"><i class=\"glyphicon glyphicon-cog\"></i>", $_GET["login"]);
+                        ?>
+                            <span>CPstudent CARE</span>
+                        </a>
                     </div>
                     <div class="clearfix"></div>
 
