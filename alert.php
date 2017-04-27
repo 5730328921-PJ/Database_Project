@@ -244,7 +244,7 @@
                                                 }
                                             }
                                             if ($count == 1)
-                                                printf("<td><td><td>NO STUDENT HAS CRITIAL GPA<td><td></td></td></td></td></td>");
+                                                printf("<td><td><td>NO STUDENT HAS CRITICAL GPA<td><td></td></td></td></td></td>");
                                             ?>
                                         </tbody>
                                     </table>
