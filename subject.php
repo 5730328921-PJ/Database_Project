@@ -264,7 +264,7 @@
                                     $count = 1;
                                     while($row = $result->fetch_assoc()) {
                                         list($year, $semester) = explode("/", $row["semester"]);
-                                        if (($year + 1 == (date("Y") - ((date("m") <= 7) ? 1 : 0)))
+                                        if (($year == (date("Y") - ((date("m") <= 7) ? 1 : 0)))
                                             && ($semester == ((date("m") > 7) ? 1 : 2))) {
                                             if($count%2 == 0){
                                                 printf("<tr class=\"even pointer\" onclick=\"window.document.location='student.php?login=%s&studentID=%s';\">", $_GET["login"], $row["studentID"]);
