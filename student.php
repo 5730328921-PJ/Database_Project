@@ -290,7 +290,7 @@
                                                                         <h2> GPA <small>( IN EACH TERM )</small></h2>
                                                                         <div class="col-md-1 col-sm-12 col-xs-12" style="margin: 4px 0px 5px 60px">
                                                                             <?php
-                                                                                printf("<button type=\"button\" class=\"btn btn-success btn-sm\">Status: %s</button>", ucfirst(STUDENT_STATUS));
+                                                                                printf("<button type=\"button\" class=\"btn btn-success btn-sm\">Status: %s</button>", STUDENT_STATUS);
                                                                             ?>
                                                                         </div>
                                                                         <div class="col-md-1 col-sm-12 col-xs-12" style="margin: 4px 0px 5px 60px">
@@ -402,7 +402,7 @@
                                                         $total = mysqli_num_rows($result);
                                                         while ($row = $result->fetch_assoc()) {
                                                             list($year, $semester) = explode("/", $row["semester"]);
-                                                            if (strpos(" A+B+C+D+", $row["grade"]) != false
+                                                            if (strpos(" A+B+C+D+S", $row["grade"]) != false
                                                                 && $year == STUDENT_ENTYEAR
                                                                 && $semester == 1)
                                                                 printf("<a class=\"btn btn-primary\"></i>%s: %s</a>", $row["subjectName"], $row["grade"]);
@@ -429,7 +429,7 @@
                                                         $total = mysqli_num_rows($result);
                                                         while ($row = $result->fetch_assoc()) {
                                                             list($year, $semester) = explode("/", $row["semester"]);
-                                                            if (strpos(" A+B+C+D+", $row["grade"]) == false
+                                                            if (strpos(" A+B+C+D+S", $row["grade"]) == false
                                                                 && $year == STUDENT_ENTYEAR
                                                                 && $semester == 1)
                                                                 printf("<a class=\"btn btn-primary\"></i>%s: %s</a>", $row["subjectName"], $row["grade"]);
@@ -456,7 +456,7 @@
                                                         $total = mysqli_num_rows($result);
                                                         while ($row = $result->fetch_assoc()) {
                                                             list($year, $semester) = explode("/", $row["semester"]);
-                                                            if (strpos(" A+B+C+D+", $row["grade"]) != false
+                                                            if (strpos(" A+B+C+D+S", $row["grade"]) != false
                                                                 && $year == STUDENT_ENTYEAR
                                                                 && $semester == 2)
                                                                 printf("<a class=\"btn btn-primary\"></i>%s: %s</a>", $row["subjectName"], $row["grade"]);
@@ -476,7 +476,7 @@
                                                         $total = mysqli_num_rows($result);
                                                         while ($row = $result->fetch_assoc()) {
                                                             list($year, $semester) = explode("/", $row["semester"]);
-                                                            if (strpos(" A+B+C+D+", $row["grade"]) == false
+                                                            if (strpos(" A+B+C+D+S", $row["grade"]) == false
                                                                 && $year == STUDENT_ENTYEAR
                                                                 && $semester == 2)
                                                                 printf("<a class=\"btn btn-primary\"></i>%s: %s</a>", $row["subjectName"], $row["grade"]);
@@ -503,7 +503,7 @@
                                                         $total = mysqli_num_rows($result);
                                                         while ($row = $result->fetch_assoc()) {
                                                             list($year, $semester) = explode("/", $row["semester"]);
-                                                            if (strpos(" A+B+C+D+", $row["grade"]) != false
+                                                            if (strpos(" A+B+C+D+S", $row["grade"]) != false
                                                                 && $year == STUDENT_ENTYEAR + 1
                                                                 && $semester == 1)
                                                                 printf("<a class=\"btn btn-primary\"></i>%s: %s</a>", $row["subjectName"], $row["grade"]);
@@ -523,7 +523,7 @@
                                                         $total = mysqli_num_rows($result);
                                                         while ($row = $result->fetch_assoc()) {
                                                             list($year, $semester) = explode("/", $row["semester"]);
-                                                            if (strpos(" A+B+C+D+", $row["grade"]) == false
+                                                            if (strpos(" A+B+C+D+S", $row["grade"]) == false
                                                                 && $year == STUDENT_ENTYEAR + 1
                                                                 && $semester == 1)
                                                                 printf("<a class=\"btn btn-primary\"></i>%s: %s</a>", $row["subjectName"], $row["grade"]);
@@ -550,7 +550,7 @@
                                                         $total = mysqli_num_rows($result);
                                                         while ($row = $result->fetch_assoc()) {
                                                             list($year, $semester) = explode("/", $row["semester"]);
-                                                            if (strpos(" A+B+C+D+", $row["grade"]) != false
+                                                            if (strpos(" A+B+C+D+S", $row["grade"]) != false
                                                                 && $year == STUDENT_ENTYEAR + 1
                                                                 && $semester == 2)
                                                                 printf("<a class=\"btn btn-primary\"></i>%s: %s</a>", $row["subjectName"], $row["grade"]);
@@ -570,7 +570,7 @@
                                                         $total = mysqli_num_rows($result);
                                                         while ($row = $result->fetch_assoc()) {
                                                             list($year, $semester) = explode("/", $row["semester"]);
-                                                            if (strpos(" A+B+C+D+", $row["grade"]) == false
+                                                            if (strpos(" A+B+C+D+S", $row["grade"]) == false
                                                                 && $year == STUDENT_ENTYEAR + 1
                                                                 && $semester == 2)
                                                                 printf("<a class=\"btn btn-primary\"></i>%s: %s</a>", $row["subjectName"], $row["grade"]);
@@ -597,7 +597,7 @@
                                                         $total = mysqli_num_rows($result);
                                                         while ($row = $result->fetch_assoc()) {
                                                             list($year, $semester) = explode("/", $row["semester"]);
-                                                            if (strpos(" A+B+C+D+", $row["grade"]) != false
+                                                            if (strpos(" A+B+C+D+S", $row["grade"]) != false
                                                                 && $year == STUDENT_ENTYEAR + 2
                                                                 && $semester == 1)
                                                                 printf("<a class=\"btn btn-primary\"></i>%s: %s</a>", $row["subjectName"], $row["grade"]);
@@ -617,7 +617,7 @@
                                                         $total = mysqli_num_rows($result);
                                                         while ($row = $result->fetch_assoc()) {
                                                             list($year, $semester) = explode("/", $row["semester"]);
-                                                            if (strpos(" A+B+C+D+", $row["grade"]) == false
+                                                            if (strpos(" A+B+C+D+S", $row["grade"]) == false
                                                                 && $year == STUDENT_ENTYEAR + 2
                                                                 && $semester == 1)
                                                                 printf("<a class=\"btn btn-primary\"></i>%s: %s</a>", $row["subjectName"], $row["grade"]);
@@ -644,7 +644,7 @@
                                                         $total = mysqli_num_rows($result);
                                                         while ($row = $result->fetch_assoc()) {
                                                             list($year, $semester) = explode("/", $row["semester"]);
-                                                            if (strpos(" A+B+C+D+", $row["grade"]) != false
+                                                            if (strpos(" A+B+C+D+S", $row["grade"]) != false
                                                                 && $year == STUDENT_ENTYEAR + 2
                                                                 && $semester == 2)
                                                                 printf("<a class=\"btn btn-primary\"></i>%s: %s</a>", $row["subjectName"], $row["grade"]);
@@ -664,7 +664,7 @@
                                                         $total = mysqli_num_rows($result);
                                                         while ($row = $result->fetch_assoc()) {
                                                             list($year, $semester) = explode("/", $row["semester"]);
-                                                            if (strpos(" A+B+C+D+", $row["grade"]) == false
+                                                            if (strpos(" A+B+C+D+S", $row["grade"]) == false
                                                                 && $year == STUDENT_ENTYEAR + 2
                                                                 && $semester == 2)
                                                                 printf("<a class=\"btn btn-primary\"></i>%s: %s</a>", $row["subjectName"], $row["grade"]);
@@ -691,7 +691,7 @@
                                                         $total = mysqli_num_rows($result);
                                                         while ($row = $result->fetch_assoc()) {
                                                             list($year, $semester) = explode("/", $row["semester"]);
-                                                            if (strpos(" A+B+C+D+", $row["grade"]) != false
+                                                            if (strpos(" A+B+C+D+S", $row["grade"]) != false
                                                                 && $year == STUDENT_ENTYEAR + 3
                                                                 && $semester == 1)
                                                                 printf("<a class=\"btn btn-primary\"></i>%s: %s</a>", $row["subjectName"], $row["grade"]);
@@ -711,7 +711,7 @@
                                                         $total = mysqli_num_rows($result);
                                                         while ($row = $result->fetch_assoc()) {
                                                             list($year, $semester) = explode("/", $row["semester"]);
-                                                            if (strpos(" A+B+C+D+", $row["grade"]) == false
+                                                            if (strpos(" A+B+C+D+S", $row["grade"]) == false
                                                                 && $year == STUDENT_ENTYEAR + 3
                                                                 && $semester == 1)
                                                                 printf("<a class=\"btn btn-primary\"></i>%s: %s</a>", $row["subjectName"], $row["grade"]);
@@ -738,7 +738,7 @@
                                                         $total = mysqli_num_rows($result);
                                                         while ($row = $result->fetch_assoc()) {
                                                             list($year, $semester) = explode("/", $row["semester"]);
-                                                            if (strpos(" A+B+C+D+", $row["grade"]) != false
+                                                            if (strpos(" A+B+C+D+S", $row["grade"]) != false
                                                                 && $year == STUDENT_ENTYEAR + 3
                                                                 && $semester == 2)
                                                                 printf("<a class=\"btn btn-primary\"></i>%s: %s</a>", $row["subjectName"], $row["grade"]);
@@ -757,7 +757,7 @@
                                                         $total = mysqli_num_rows($result);
                                                         while ($row = $result->fetch_assoc()) {
                                                             list($year, $semester) = explode("/", $row["semester"]);
-                                                            if (strpos(" A+B+C+D+", $row["grade"]) == false
+                                                            if (strpos(" A+B+C+D+S", $row["grade"]) == false
                                                                 && $year == STUDENT_ENTYEAR + 3
                                                                 && $semester == 2)
                                                                 printf("<a class=\"btn btn-primary\"></i>%s: %s</a>", $row["subjectName"], $row["grade"]);
