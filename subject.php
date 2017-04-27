@@ -262,11 +262,11 @@
                                     $result = $mysqli->query($q);
                                     $total = mysqli_num_rows($result);
                                     $count = 1;
-                                    while($row = $result->fetch_assoc()) {
+                                    while ($row = $result->fetch_assoc()) {
                                         list($year, $semester) = explode("/", $row["semester"]);
                                         if (($year == (date("Y") - ((date("m") <= 7) ? 1 : 0)))
                                             && ($semester == ((date("m") > 7) ? 1 : 2))) {
-                                            if($count%2 == 0){
+                                            if ($count%2 == 0) {
                                                 printf("<tr class=\"even pointer\" onclick=\"window.document.location='student.php?login=%s&studentID=%s';\">", $_GET["login"], $row["studentID"]);
                                                 printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
                                                 printf("<td >%s</td>
@@ -275,7 +275,7 @@
                                                     </td>",$row["studentID"],$row["semester"],$row["sectionNO"]);
                                                 echo"</tr>";
                                             }
-                                            else{
+                                            else {
                                                 printf("<tr class=\"even pointer\" onclick=\"window.document.location='student.php?login=%s&studentID=%s';\">", $_GET["login"], $row["studentID"]);
                                                 printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
                                                 printf("<td >%s</td>
