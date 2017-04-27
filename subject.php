@@ -16,6 +16,7 @@
     <link href="vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="build/css/custom.min.css" rel="stylesheet">
+    <script type="text/javascript" src="build/js/canvasjs.min.js"></script>
 </head>
 
 <body class="nav-md">
@@ -38,6 +39,60 @@
     }
    ?>
 
+   <?php
+   //Year2015
+   print("<script type=\"text/javascript\">
+     window.onload = function () {
+       var chart = new CanvasJS.Chart(\"chartContainer\",
+  	{
+                  animationEnabled: true,
+  		data: [
+  		{
+  			type: \"doughnut\",
+  			startAngle: 60,
+  			toolTipContent: \"{legendText}: {y} - <strong>#percent% </strong>\",
+  			showInLegend: false,
+  			dataPoints: [
+  				{y: 5, indexLabel: \"A #percent%\", legendText: \"A\" },
+  				{y: 8, indexLabel: \"B+ #percent%\", legendText: \"B+\" },
+  				{y: 12,  indexLabel: \"B #percent%\", legendText: \"B\" },
+          {y: 5, indexLabel: \"C+ #percent%\", legendText: \"C+\" },
+  				{y: 4, indexLabel: \"C #percent%\", legendText: \"C\" },
+  				{y: 2,  indexLabel: \"D+ #percent%\", legendText: \"D+\" },
+          {y: 2,  indexLabel: \"D #percent%\", legendText: \"D\" },
+          {y: 1,  indexLabel: \"F #percent%\", legendText: \"F\" }
+  			]
+  		}
+  		]
+  	});
+  	chart.render();
+
+    var chart2 = new CanvasJS.Chart(\"chartContainer2\",
+ {
+               animationEnabled: true,
+   data: [
+   {
+     type: \"doughnut\",
+     startAngle: 60,
+     toolTipContent: \"{legendText}: {y} - <strong>#percent% </strong>\",
+     showInLegend: false,
+     dataPoints: [
+       {y: 5, indexLabel: \"A #percent%\", legendText: \"A\" },
+       {y: 8, indexLabel: \"B+ #percent%\", legendText: \"B+\" },
+       {y: 12,  indexLabel: \"B #percent%\", legendText: \"B\" },
+       {y: 5, indexLabel: \"C+ #percent%\", legendText: \"C+\" },
+       {y: 4, indexLabel: \"C #percent%\", legendText: \"C\" },
+       {y: 2,  indexLabel: \"D+ #percent%\", legendText: \"D+\" },
+       {y: 2,  indexLabel: \"D #percent%\", legendText: \"D\" },
+       {y: 1,  indexLabel: \"F #percent%\", legendText: \"F\" }
+     ]
+   }
+   ]
+ });
+ chart2.render();
+ }
+   </script>");
+   ?>
     <div class="container body">
         <div class="main_container">
             <div class="col-md-3 left_col menu_fixed">
@@ -160,41 +215,30 @@
 
                     <!-- pie chart -->
                     <div class="col-md-12 col-sm-12 col-xs-12" style="margin: 10px 0px 0px 0px ">
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <div class="x_panel">
-                                <div class="x_title">
-                                    <h2>GPA Year 2014</h2>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="x_content2">
-                                    <div id="graph_donutY1" style="width:100%; height:250px;"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="x_panel">
                                 <div class="x_title">
                                     <h2>GPA Year 2015</h2>
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content2">
-                                    <div id="graph_donutY2" style="width:100%; height:250px;"></div>
+                                    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="x_panel">
                                 <div class="x_title">
                                     <h2>GPA Year 2016</h2>
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content2">
-                                    <div id="graph_donutY3" style="width:100%; height:250px;"></div>
+                                    <div id="chartContainer2" style="height: 300px; width: 100%;"></div>
                                 </div>
                             </div>
                         </div>
+
+
                     </div>
 
                     <div class="col-md-10 col-md-offset-1" style="margin-top: 20px">

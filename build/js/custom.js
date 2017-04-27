@@ -1,8 +1,8 @@
 /**
  * Resize function without multiple trigger
- * 
+ *
  * Usage:
- * $(window).smartresize(function(){  
+ * $(window).smartresize(function(){
  *     // code here
  * });
  */
@@ -29,7 +29,7 @@
 		};
 	};
 
-	// smartresize 
+	// smartresize
 	jQuery.fn[sr] = function (fn) { return fn ? this.bind('resize', debounce(fn)) : this.trigger(sr); };
 
 })(jQuery, 'smartresize');
@@ -97,7 +97,7 @@ function init_sidebar() {
 		}
 	});
 
-	// toggle small or large menu 
+	// toggle small or large menu
 	$MENU_TOGGLE.on('click', function () {
 		console.log('clicked - menu toggle');
 
@@ -613,7 +613,7 @@ function init_starrr() {
 
 function init_JQVmap() {
 
-	//console.log('check init_JQVmap [' + typeof (VectorCanvas) + '][' + typeof (jQuery.fn.vectorMap) + ']' );	
+	//console.log('check init_JQVmap [' + typeof (VectorCanvas) + '][' + typeof (jQuery.fn.vectorMap) + ']' );
 
 	if (typeof (jQuery.fn.vectorMap) === 'undefined') { return; }
 
@@ -696,7 +696,7 @@ function init_chart_doughnut() {
 					"Famale",
 				],
 				datasets: [{
-					data: [70, 30],
+						data: [80, 20],
 					backgroundColor: [
 						"#E74C3C",
 						"#3498DB"
@@ -2784,8 +2784,8 @@ function init_morris_charts() {
 		});
 	}
 
-	
-	
+
+
 
 	if ($('#graph_line').length) {
 
@@ -5132,5 +5132,3 @@ $(document).ready(function () {
 	init_autocomplete();
 
 });
-
-

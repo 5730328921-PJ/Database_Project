@@ -241,78 +241,80 @@
                                     </thead>
 
                                     <tbody>
-                                      <?php
-                                      $q="SELECT ST.studentID, A.grade, SU.credits FROM student ST, subject SU, adddrop A WHERE ST.studentID = A.studentID AND SU.subjectID = A.subjectID";
-                                      $result = $mysqli->query($q);
-                                      $count = 1;
-                                      $total = mysqli_num_rows($result);
-                                      $q2="SELECT image, studentID, firstName, lastName, sex FROM student";
-                                      $result2 = $mysqli->query($q2);
-                                      $count2 = 1;
-                                      $total = mysqli_num_rows($result2);
-                                      while($row = $result2->fetch_assoc()) {
-                                        if((strcasecmp($row["studentID"],$_GET["sid"])==0 || $_GET["sid"]=="")
-                                            && (strcasecmp($row["firstName"],$_GET["fname"])==0 || $_GET["fname"]=="")
-                                            && (strcasecmp($row["lastName"],$_GET["lname"])==0 || $_GET["lname"]=="")
-                                            && (strcasecmp($row["sex"], $_GET["sex"]) == 0 || $_GET["sex"] == "")
-                                            && (strcasecmp(substr($row["studentID"], 0, -8), $_GET["year"]) == 0 || $_GET["year"]=="")) {
-                                            $gpax = 0;
-                                            $credits = 0;
-                                            $result->data_seek(0);
-                                            while($row2 = $result->fetch_assoc()) {
-                                                if ($row["studentID"] == $row2["studentID"]) {
-                                                    $grade = -1;
-                                                    if ($row2["grade"] == "A")
-                                                        $grade = 4;
-                                                    else if ($row2["grade"] == "B+")
-                                                        $grade = 3.5;
-                                                    else if ($row2["grade"] == "B")
-                                                        $grade = 3;
-                                                    else if ($row2["grade"] == "C+")
-                                                        $grade = 2.5;
-                                                    else if ($row2["grade"] == "C")
-                                                        $grade = 2;
-                                                    else if ($row2["grade"] == "D+")
-                                                        $grade = 1.5;
-                                                    else if ($row2["grade"] == "D")
-                                                        $grade = 1;
-                                                    else if ($row2["grade"] == "F")
-                                                        $grade = 0;
-                                                    if ($grade != -1) {
-                                                        $gpax += $grade * $row2["credits"];
-                                                        $credits += $row2["credits"];
+                                        <?php
+                                        $q="SELECT ST.studentID, A.grade, SU.credits FROM student ST, subject SU, adddrop A WHERE ST.studentID = A.studentID AND SU.subjectID = A.subjectID";
+                                        $result = $mysqli->query($q);
+                                        $count = 1;
+                                        $total = mysqli_num_rows($result);
+                                        $q2="SELECT image, studentID, firstName, lastName, teacherID, sex FROM student";
+                                        $result2 = $mysqli->query($q2);
+                                        $count2 = 1;
+                                        $total = mysqli_num_rows($result2);
+                                        while($row = $result2->fetch_assoc()) {
+                                            if((strcasecmp($row["studentID"],$_GET["sid"])==0 || $_GET["sid"]=="")
+                                                && (strcasecmp($row["firstName"],$_GET["fname"])==0 || $_GET["fname"]=="")
+                                                && (strcasecmp($row["lastName"],$_GET["lname"])==0 || $_GET["lname"]=="")
+                                                && (strcasecmp($row["sex"], $_GET["sex"]) == 0 || $_GET["sex"] == "")
+                                                && (strcasecmp(substr($row["studentID"], 0, -8), $_GET["year"]) == 0 || $_GET["year"]=="")
+                                                && (!$_GET["adviser"] || ($_GET["adviser"] && $row["teacherID"] == TEACHER_ID))) {
+                                                $gpax = 0;
+                                                $credits = 0;
+                                                $result->data_seek(0);
+                                                while($row2 = $result->fetch_assoc()) {
+                                                    if ($row["studentID"] == $row2["studentID"]) {
+                                                        $grade = -1;
+                                                        if ($row2["grade"] == "A")
+                                                            $grade = 4;
+                                                        else if ($row2["grade"] == "B+")
+                                                            $grade = 3.5;
+                                                        else if ($row2["grade"] == "B")
+                                                            $grade = 3;
+                                                        else if ($row2["grade"] == "C+")
+                                                            $grade = 2.5;
+                                                        else if ($row2["grade"] == "C")
+                                                            $grade = 2;
+                                                        else if ($row2["grade"] == "D+")
+                                                            $grade = 1.5;
+                                                        else if ($row2["grade"] == "D")
+                                                            $grade = 1;
+                                                        else if ($row2["grade"] == "F")
+                                                            $grade = 0;
+                                                        if ($grade != -1) {
+                                                            $gpax += $grade * $row2["credits"];
+                                                            $credits += $row2["credits"];
+                                                        }
                                                     }
                                                 }
-                                            }
-                                            if ($credits != 0)
-                                                $gpax /= $credits;
+                                                if ($credits != 0)
+                                                    $gpax /= $credits;
 
-                                            if (($_GET["gpax"] - $gpax <= 1 && $_GET["gpax"] - $gpax >= 0) || $_GET["gpax"] == "") {
-                                                if($count%2==0){
-                                                printf("<tr class=\"even pointer\" onclick=\"window.document.location='student.php?login=%s&studentID=%s';\">", $_GET["login"], $row["studentID"]);
-                                                printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
-                                                printf("<td >%s</td>
-                                                    <td >%s</td>
-                                                    <td >%s</td>
-                                                    <td >%.2f</td>
-                                                    </td>",$row["studentID"],$row["firstName"],$row["lastName"],$gpax);
-                                                echo"</tr>";
-                                                $i++;
-                                                }
-                                                else{
-                                                printf("<tr class=\"odd pointer\" onclick=\"window.document.location='student.php?login=%s&studentID=%s';\">", $_GET["login"], $row["studentID"]);
-                                                printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
-                                                printf("<td >%s</td>
+                                                if (($_GET["gpax"] - $gpax <= 1 && $_GET["gpax"] - $gpax >= 0) || $_GET["gpax"] == "") {
+                                                    if($count%2==0){
+                                                    printf("<tr class=\"even pointer\" onclick=\"window.document.location='student.php?login=%s&studentID=%s';\">", $_GET["login"], $row["studentID"]);
+                                                    printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
+                                                    printf("<td >%s</td>
                                                         <td >%s</td>
                                                         <td >%s</td>
                                                         <td >%.2f</td>
                                                         </td>",$row["studentID"],$row["firstName"],$row["lastName"],$gpax);
-                                                echo"</tr>";
-                                                $i++;
+                                                    echo"</tr>";
+                                                    }
+                                                    else{
+                                                    printf("<tr class=\"odd pointer\" onclick=\"window.document.location='student.php?login=%s&studentID=%s';\">", $_GET["login"], $row["studentID"]);
+                                                    printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
+                                                    printf("<td >%s</td>
+                                                            <td >%s</td>
+                                                            <td >%s</td>
+                                                            <td >%.2f</td>
+                                                            </td>",$row["studentID"],$row["firstName"],$row["lastName"],$gpax);
+                                                    echo"</tr>";
+                                                    }
+                                                    $count++;
                                                 }
                                             }
                                         }
-                                      }
+                                        if ($count == 1)
+                                            print("<td><td><td>NOT FOUND<td><td></td></td></td></td></td>");
                                         ?>
                                     </tbody>
                                 </table>

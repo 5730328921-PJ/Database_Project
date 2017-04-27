@@ -16,6 +16,9 @@
     <link href="vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="build/css/custom.min.css" rel="stylesheet">
+
+    <script type="text/javascript" src="build/js/canvasjs.min.js"></script>
+
 </head>
 
 <body class="nav-md">
@@ -40,6 +43,233 @@
         DEFINE('TEACHER_ID', $row["teacherID"]);
     }
    ?>
+
+    <?php
+
+
+    //Year 1
+    print("<script type=\"text/javascript\">
+        window.onload = function () {
+        var chart = new CanvasJS.Chart(\"chartContainer1\",
+        {
+        title:{
+            text: \"Year1\"
+        },
+        exportFileName: \"Pie Chart\",
+        exportEnabled: false,
+                    animationEnabled: true,
+        legend:{
+            verticalAlign: \"bottom\",
+            horizontalAlign: \"center\"
+        },
+        data: [
+        {
+            type: \"pie\",
+            showInLegend: false,
+            toolTipContent: \"{name}: <strong>{y}%</strong>\",
+            indexLabel: \"{name} {y}%\",
+            dataPoints: [");
+
+            printf("{  y: %d, name: \"Male\", exploded: true}," , 70);
+            printf("{  y: %d, name: \"Female\"}", 30);
+            print("
+            ]
+        }
+        ]
+        });
+        chart.render();
+
+        var chart2 = new CanvasJS.Chart(\"chartContainer2\",
+        {
+        title:{
+            text: \"Year2\"
+        },
+        exportFileName: \"Pie Chart\",
+        exportEnabled: false,
+                    animationEnabled: true,
+        legend:{
+            verticalAlign: \"bottom\",
+            horizontalAlign: \"center\"
+        },
+        data: [
+        {
+            type: \"pie\",
+            showInLegend: false,
+            toolTipContent: \"{name}: <strong>{y}%</strong>\",
+            indexLabel: \"{name} {y}%\",
+            dataPoints: [");
+
+            printf("{  y: %d, name: \"Male\", exploded: true}," , 70);
+            printf("{  y: %d, name: \"Female\"}", 30);
+            print("
+            ]
+        }
+        ]
+        });
+        chart2.render();
+
+        var chart3 = new CanvasJS.Chart(\"chartContainer3\",
+        {
+        title:{
+            text: \"Year3\"
+        },
+        exportFileName: \"Pie Chart\",
+        exportEnabled: false,
+                    animationEnabled: true,
+        legend:{
+            verticalAlign: \"bottom\",
+            horizontalAlign: \"center\"
+        },
+        data: [
+        {
+            type: \"pie\",
+            showInLegend: false,
+            toolTipContent: \"{name}: <strong>{y}%</strong>\",
+            indexLabel: \"{name} {y}%\",
+            dataPoints: [");
+
+            printf("{  y: %d, name: \"Male\", exploded: true}," , 70);
+            printf("{  y: %d, name: \"Female\"}", 30);
+            print("
+            ]
+        }
+        ]
+        });
+        chart3.render();
+
+        var chart4 = new CanvasJS.Chart(\"chartContainer4\",
+        {
+        title:{
+            text: \"Year4\"
+        },
+        exportFileName: \"Pie Chart\",
+        exportEnabled: false,
+                    animationEnabled: true,
+        legend:{
+            verticalAlign: \"bottom\",
+            horizontalAlign: \"center\"
+        },
+        data: [
+        {
+            type: \"pie\",
+            showInLegend: false,
+            toolTipContent: \"{name}: <strong>{y}%</strong>\",
+            indexLabel: \"{name} {y}%\",
+            dataPoints: [");
+
+            printf("{  y: %d, name: \"Male\", exploded: true}," , 70);
+            printf("{  y: %d, name: \"Female\"}", 30);
+            print("
+            ]
+        }
+        ]
+        });
+        chart4.render();
+
+    var columnchart = new CanvasJS.Chart(\"chartContainer5\",
+        {
+            theme: \"theme3\",
+                        animationEnabled: true,
+            title:{
+                text: \"GPAX of each term\",
+                fontSize: 30
+            },
+            toolTip: {
+                shared: true
+            },
+            axisY: {
+                title: \"GPAX\"
+            },
+
+            data: [
+            {
+                type: \"column\",
+                name: \"GPAX\",
+                showInLegend: true,
+                dataPoints:[
+                {label: \"Year1 Term1\", y: 3.24},
+                {label: \"Year1 Term2\", y: 2.89},
+                {label: \"Year2 Term1\", y: 3.15},
+                {label: \"Year2 Term2\", y: 2.35},
+                {label: \"Year3 Term1\", y: 2.79},
+                {label: \"Year3 Term2\", y: 2.35},
+                {label: \"Year4 Term1\", y: 3.07},
+                {label: \"Year4 Term2\", y: 3.18},
+
+                ]
+            },
+
+
+            ],
+            legend:{
+            cursor:\"pointer\",
+            itemclick: function(e){
+                if (typeof(e.dataSeries.visible) === \"undefined\" || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+                }
+                else {
+                e.dataSeries.visible = true;
+                }
+                columnchart.render();
+            }
+            },
+        });
+
+    columnchart.render();
+
+    var columnchart2 = new CanvasJS.Chart(\"chartContainer6\",
+        {
+            theme: \"theme3\",
+                        animationEnabled: true,
+            title:{
+                text: \"Awards of each term\",
+                fontSize: 30
+            },
+            toolTip: {
+                shared: true
+            },
+            axisY: {
+                title: \"Number of awards\"
+            },
+
+            data: [
+            {
+                type: \"column\",
+                name: \"Number of award\",
+                showInLegend: true,
+                dataPoints:[
+                {label: \"Year1 Term1\", y: 3},
+                {label: \"Year1 Term2\", y: 2},
+                {label: \"Year2 Term1\", y: 2},
+                {label: \"Year2 Term2\", y: 4},
+                {label: \"Year3 Term1\", y: 5},
+                {label: \"Year3 Term2\", y: 4},
+                {label: \"Year4 Term1\", y: 3},
+                {label: \"Year4 Term2\", y: 6},
+
+                ]
+            },
+
+
+            ],
+            legend:{
+            cursor:\"pointer\",
+            itemclick: function(e){
+                if (typeof(e.dataSeries.visible) === \"undefined\" || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+                }
+                else {
+                e.dataSeries.visible = true;
+                }
+                columnchart2.render();
+            }
+            },
+        });
+
+    columnchart2.render();
+    }
+    </script>");
+    ?>
 
     <div class="container body">
         <div class="main_container">
@@ -168,13 +398,13 @@
                                         </thead>
 
                                         <tbody>
-                                            <?php
+                                          <?php
                                             $q="SELECT S.image, S.studentID, S.firstName, S.lastName, D.note, D.scorededuction, D.date, D.time FROM student S, deduct D WHERE S.studentID = D.studentID ORDER BY D.date, D.time ASC";
                                             $result = $mysqli->query($q);
                                             $total = mysqli_num_rows($result);
-                                            $count = 0;
+                                            $count = 1;
                                             while($row = $result->fetch_assoc()) {
-                                                $timediff = (strtotime(date("Y-m-d")) - strtotime($row["date"])) / (60 * 60 * 24); 
+                                                $timediff = (strtotime(date("Y-m-d")) - strtotime($row["date"])) / (60 * 60 * 24);
                                                 if ($timediff <= 7 && $timediff >= 0) {
                                                     if($count%2==0){
                                                     printf("<tr class=\"even pointer\" onclick=\"window.document.location='student.php?login=%s&studentID=%s';\">", $_GET["login"], $row["studentID"]);
@@ -188,10 +418,9 @@
                                                         <td >%s</td>
                                                         </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["note"],$row["scorededuction"],$row["date"],$row["time"]);
                                                     echo"</tr>";
-                                                    $i++;
                                                     }
                                                     else{
-                                                    printf("<tr class=\"even pointer\" onclick=\"window.document.location='student.php?login=%s&studentID=%s';\">", $_GET["login"], $row["studentID"]);
+                                                    printf("<tr class=\"odd pointer\" onclick=\"window.document.location='student.php?login=%s&studentID=%s';\">", $_GET["login"], $row["studentID"]);
                                                     printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
                                                     printf("<td >%s</td>
                                                             <td >%s</td>
@@ -202,12 +431,12 @@
                                                             <td >%s</td>
                                                             </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["note"],$row["scorededuction"],$row["date"],$row["time"]);
                                                     echo"</tr>";
-                                                    $i++;
                                                     }
+                                                    $count++;
                                                 }
                                             }
-                                            if (!$count)
-                                                printf("<td><td><td><td>NO RECENT DEDUCTED STUDENT<td><td><td></td></td></td></td></td></td></td>");
+                                            if ($count == 1)
+                                                printf("<td><td><td><td>NO RECENT DEDUCTED STUDENT<td><td><td><td></td></td></td></td></td></td></td></td>");
                                             ?>
                                         </tbody>
                                     </table>
@@ -237,48 +466,47 @@
                                             </tr>
                                         </thead>
 
-                                        
                                         <tbody>
-                                            <?php
-                                            $q="SELECT S.image, S.studentID, S.firstName, S.lastName, A.cause, A.date, A.period FROM student S, absent A WHERE S.studentID = A.studentID ORDER BY A.date, A.period ASC";
-                                            $result = $mysqli->query($q);
-                                            $total= mysqli_num_rows($result);
-                                            $count = 0;
-                                            while($row = $result->fetch_assoc()) {
-                                                $timediff = (strtotime($row["date"]) - strtotime(date("Y-m-d"))) / (60 * 60 * 24);
-                                                if ($timediff <= 7 && $timediff == 0) {
-                                                    if($count%2==0){
-                                                        echo "<tr class=\"even pointer\" onclick=\"window.document.location='student.php';\">";
-                                                        printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
-                                                        printf("<td >%s</td>
-                                                            <td >%s</td>
-                                                            <td >%s</td>
-                                                            <td >%s</td>
-                                                            <td >%s</td>
-                                                            <td >%s</td>
-                                                            </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["cause"],$row["date"],$row["period"]);
-                                                        echo"</tr>";
-                                                        $i++;
-                                                    }
-                                                    else{
-                                                        echo "<tr class=\"odd pointer\" onclick=\"window.document.location='student.php';\">";
-                                                        printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
-                                                        printf("<td >%s</td>
-                                                                <td >%s</td>
-                                                                <td >%s</td>
-                                                                <td >%s</td>
-                                                                <td >%s</td>
-                                                                <td >%s</td>
-                                                                </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["cause"],$row["date"],$row["period"]);
-                                                        echo"</tr>";
-                                                        $i++;
-                                                    }
-                                                    $count++;
-                                                }
-                                            }
-                                            if (!$count)
-                                                printf("<td><td><td><td>NO RECENT ABSENTED STUDENT<td><td><td></td></td></td></td></td></td></td>");
-                                            ?>
+                                          <?php
+                                          $q="SELECT S.image, S.studentID, S.firstName, S.lastName, A.cause, A.date, A.period FROM student S, absent A WHERE S.studentID = A.studentID ORDER BY A.date, A.period ASC";
+                                          $result = $mysqli->query($q);
+                                          $total= mysqli_num_rows($result);
+                                          $count = 1;
+                                          while($row = $result->fetch_assoc()) {
+                                              $timediff = (strtotime(date("Y-m-d")) - strtotime($row["date"])) / (60 * 60 * 24);
+                                              if ($timediff <= 7 && $timediff >= 0) {
+                                                  if($count%2==0){
+                                                      printf("<tr class=\"even pointer\" onclick=\"window.document.location='student.php?login=%s&studentID=%s';\">", $_GET["login"], $row["studentID"]);
+                                                      printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
+                                                      printf("<td >%s</td>
+                                                          <td >%s</td>
+                                                          <td >%s</td>
+                                                          <td >%s</td>
+                                                          <td >%s</td>
+                                                          <td >%s</td>
+                                                          </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["cause"],$row["date"],$row["period"]);
+                                                      echo"</tr>";
+                                                      $i++;
+                                                  }
+                                                  else{
+                                                      printf("<tr class=\"odd pointer\" onclick=\"window.document.location='student.php?login=%s&studentID=%s';\">", $_GET["login"], $row["studentID"]);
+                                                      printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
+                                                      printf("<td >%s</td>
+                                                              <td >%s</td>
+                                                              <td >%s</td>
+                                                              <td >%s</td>
+                                                              <td >%s</td>
+                                                              <td >%s</td>
+                                                              </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["cause"],$row["date"],$row["period"]);
+                                                      echo"</tr>";
+                                                      $i++;
+                                                  }
+                                                  $count++;
+                                              }
+                                          }
+                                          if ($count == 1)
+                                              printf("<td><td><td><td>NO RECENT ABSENTED STUDENT<td><td><td></td></td></td></td></td></td></td>");
+                                          ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -287,7 +515,7 @@
                     </div>
 
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel tile fixed_height_320 overflow_hidden">
+                        <div class="x_panel tile fixed_height_330 overflow_hidden">
                             <div class="x_title">
                                 <h2>Amount of Students</h2>
                                 <div class="clearfix"></div>
@@ -296,32 +524,19 @@
                                 <table class="" style="width:100%">
                                     <tr>
                                         <td>
-                                            <canvas class="canvasDoughnut" height="140" width="140" style="margin: 15px 10px 10px 35px"></canvas>
+                                            <div id="chartContainer1" style="height: 200px; width: 100%;"></div>
                                         </td>
                                         <td>
-                                            <canvas class="canvasDoughnut" height="140" width="140" style="margin: 15px 10px 10px 35px"></canvas>
+                                            <div id="chartContainer2" style="height: 200px; width: 100%;"></div>
                                         </td>
                                         <td>
-                                            <canvas class="canvasDoughnut" height="140" width="140" style="margin: 15px 10px 10px 35px"></canvas>
+                                            <div id="chartContainer3" style="height: 200px; width: 100%;"></div>
                                         </td>
                                         <td>
-                                            <canvas class="canvasDoughnut" height="140" width="140" style="margin: 15px 10px 10px 35px"></canvas>
+                                            <div id="chartContainer4" style="height: 200px; width: 100%;"></div>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td align="center">
-                                            <h2>Year 1</h2>
-                                        </td>
-                                        <td align="center">
-                                            <h2>Year 2</h2>
-                                        </td>
-                                        <td align="center">
-                                            <h2>Year 3</h2>
-                                        </td>
-                                        <td align="center">
-                                            <h2>Year 4</h2>
-                                        </td>
-                                    </tr>
+
                                 </table>
                             </div>
                         </div>
@@ -334,7 +549,7 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content">
-                                    <div id="GPAX_BAR" style="width:100%; height:200px;"></div>
+                                    <div id="chartContainer5" style="height: 300px; width: 100%;">
                                 </div>
                             </div>
                         </div>
@@ -346,7 +561,7 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content">
-                                    <div id="AWARD_BAR" style="width:100%; height:200px;"></div>
+                                    <div id="chartContainer6" style="height: 300px; width: 100%;">
                                 </div>
                             </div>
                         </div>
@@ -400,6 +615,7 @@
                     <script src="vendors/datatables.net/js/jquery.dataTables.js"></script>
                     <!-- Custom Theme Scripts -->
                     <script src="build/js/custom.js"></script>
+
     <?php
     $mysqli->close();
     ?>
