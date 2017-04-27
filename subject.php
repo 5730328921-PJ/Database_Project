@@ -257,33 +257,38 @@
                                 </thead>
 
                                 <tbody>
-                                  <?php
-                                  $q="SELECT * FROM student";
-                                  $result = $mysqli->query($q);
-                                  $total= mysqli_num_rows($result);
-                                  $count =1;
-                                  while($row = $result->fetch_assoc()) {
-                                    if($count%2==0){
-                                    echo "<tr class=\"even pointer\" onclick=\"window.document.location='student.php';\">";
-                                    printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
-                                    printf("<td >%s</td>
-                                          <td >%s</td>
-                                          <td >%s</td>
-                                          </td>",$row["studentID"],$row["firstName"],$row["lastName"]);
-                                    echo"</tr>";
-                                    $i++;
+                                    <?php
+                                    $q = sprintf("SELECT S.image, S.studentID, S.firstName, S.lastName, A.semester, A.sectionNO FROM student S, adddrop A, subject SU WHERE A.subjectID = %s and A.sectionNO = %s and SU.subjectID = A.subjectID and A.studentID = S.studentID", $_GET["subjectID"], $_GET["sectionNo"]);
+                                    $result = $mysqli->query($q);
+                                    $total = mysqli_num_rows($result);
+                                    $count = 1;
+                                    while($row = $result->fetch_assoc()) {
+                                        list($year, $semester) = explode("/", $row["semester"]);
+                                        if (($year + 1 == (date("Y") - ((date("m") <= 7) ? 1 : 0)))
+                                            && ($semester == ((date("m") > 7) ? 1 : 2))) {
+                                            if($count%2 == 0){
+                                                printf("<tr class=\"even pointer\" onclick=\"window.document.location='student.php?login=%s&studentID=%s';\">", $_GET["login"], $row["studentID"]);
+                                                printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
+                                                printf("<td >%s</td>
+                                                    <td >%s</td>
+                                                    <td >%s</td>
+                                                    </td>",$row["studentID"],$row["semester"],$row["sectionNO"]);
+                                                echo"</tr>";
+                                            }
+                                            else{
+                                                printf("<tr class=\"even pointer\" onclick=\"window.document.location='student.php?login=%s&studentID=%s';\">", $_GET["login"], $row["studentID"]);
+                                                printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
+                                                printf("<td >%s</td>
+                                                    <td >%s</td>
+                                                    <td >%s</td>
+                                                    </td>",$row["studentID"],$row["semester"],$row["sectionNO"]);
+                                                echo"</tr>";
+                                            }
+                                            $count++;
+                                        }
                                     }
-                                    else{
-                                      echo "<tr class=\"odd pointer\" onclick=\"window.document.location='student.php';\">";
-                                      printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
-                                      printf("<td >%s</td>
-                                            <td >%s</td>
-                                            <td >%s</td>
-                                            </td>",$row["studentID"],$row["firstName"],$row["lastName"]);
-                                      echo"</tr>";
-                                      $i++;
-                                    }
-                                  }
+                                    if ($count == 1)
+                                        printf("<td><td>NO STUDENT HAS STUDY YOUR CLASS<td><td></td></td></td></td>");
                                     ?>
                                 </tbody>
                             </table>

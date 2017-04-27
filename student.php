@@ -19,7 +19,7 @@
 </head>
 
 <body class="nav-md">
-  <?php
+    <?php
     DEFINE('DB_USERNAME', 'root');
     DEFINE('DB_PASSWORD', 'root');
     DEFINE('DB_HOST', 'localhost');
@@ -61,7 +61,15 @@
         DEFINE('STUDENT_ADVISETEACHER_LASTNAME', $row["plname"]);
         DEFINE('STUDENT_YEAR', substr(STUDENT_ID, 0, -8));
     }
-   ?>
+
+    $q = sprintf("SELECT sum(D.scorededuction) as scorededuction FROM student S, deduct D WHERE S.studentID = %s and S.studentID = D.studentID", $_GET["studentID"]);
+    $result = $mysqli->query($q);
+    $count = 1;
+    $total = mysqli_num_rows($result);
+    while ($row = $result->fetch_assoc()) {
+        DEFINE('STUDENT_BEHAVIORSCORE', (100 - $row["scorededuction"] < 0) ? 0 : 100 - $row["scorededuction"]);
+    }
+    ?>
 
    <?php
    //Year2015
@@ -72,7 +80,7 @@
 
         animationEnabled: true,
         axisX:{
-            interval: 3
+            interval: 1
             // labelAngle : 30,
             // valueFormatString: \"HHmm'hrs'\"
 
@@ -263,7 +271,7 @@
                                             <div class="col-md-6 col-sm-7 col-xs-12" style="margin: 10px 0px 0px 0px">
                                                 <p>
                                                     <?php
-                                                        printf("Status: %s<br>Sex: %s<br>Student ID: %s<br>Birthday: %s<br>", STUDENT_STATUS, STUDENT_SEX, STUDENT_ID, date("j F Y", strtotime(STUDENT_DATEOFBIRTH)));
+                                                        printf("Status: %s (Behavior Score: %s)<br>Sex: %s<br>Student ID: %s<br>Birthday: %s<br>", STUDENT_STATUS, STUDENT_BEHAVIORSCORE, STUDENT_SEX, STUDENT_ID, date("j F Y", strtotime(STUDENT_DATEOFBIRTH)));
                                                         printf("Phone No: %s<br>Email: %s<br>Address: %s<br>", STUDENT_PHONENO, STUDENT_EMAIL, STUDENT_ADDRESS);
                                                         printf("Advise Teacher: %s %s<br>", STUDENT_ADVISETEACHER_FIRSTNAME, STUDENT_ADVISETEACHER_LASTNAME);
                                                     ?>

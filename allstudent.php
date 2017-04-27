@@ -289,25 +289,25 @@
                                                     $gpax /= $credits;
 
                                                 if (($_GET["gpax"] - $gpax <= 1 && $_GET["gpax"] - $gpax >= 0) || $_GET["gpax"] == "") {
-                                                    if($count%2==0){
-                                                    printf("<tr class=\"even pointer\" onclick=\"window.document.location='student.php?login=%s&studentID=%s';\">", $_GET["login"], $row["studentID"]);
-                                                    printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
-                                                    printf("<td >%s</td>
-                                                        <td >%s</td>
-                                                        <td >%s</td>
-                                                        <td >%.2f</td>
-                                                        </td>",$row["studentID"],$row["firstName"],$row["lastName"],$gpax);
-                                                    echo"</tr>";
-                                                    }
-                                                    else{
-                                                    printf("<tr class=\"odd pointer\" onclick=\"window.document.location='student.php?login=%s&studentID=%s';\">", $_GET["login"], $row["studentID"]);
-                                                    printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
-                                                    printf("<td >%s</td>
+                                                    if($count%2 == 0){
+                                                        printf("<tr class=\"even pointer\" onclick=\"window.document.location='student.php?login=%s&studentID=%s';\">", $_GET["login"], $row["studentID"]);
+                                                        printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
+                                                        printf("<td >%s</td>
                                                             <td >%s</td>
                                                             <td >%s</td>
                                                             <td >%.2f</td>
                                                             </td>",$row["studentID"],$row["firstName"],$row["lastName"],$gpax);
-                                                    echo"</tr>";
+                                                        echo"</tr>";
+                                                    }
+                                                    else{
+                                                        printf("<tr class=\"odd pointer\" onclick=\"window.document.location='student.php?login=%s&studentID=%s';\">", $_GET["login"], $row["studentID"]);
+                                                        printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
+                                                        printf("<td >%s</td>
+                                                                <td >%s</td>
+                                                                <td >%s</td>
+                                                                <td >%.2f</td>
+                                                                </td>",$row["studentID"],$row["firstName"],$row["lastName"],$gpax);
+                                                        echo"</tr>";
                                                     }
                                                     $count++;
                                                 }
