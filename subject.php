@@ -20,7 +20,7 @@
 </head>
 
 <body class="nav-md">
-  <?php
+    <?php
     DEFINE('DB_USERNAME', 'root');
     DEFINE('DB_PASSWORD', 'root');
     DEFINE('DB_HOST', 'localhost');
@@ -37,34 +37,110 @@
         DEFINE('TEACHER_IMAGE', $row["image"]);
         DEFINE('TEACHER_ID', $row["teacherID"]);
     }
-   ?>
+    ?>
 
-   <?php
-   //Year2015
-   print("<script type=\"text/javascript\">
-     window.onload = function () {
-       var chart = new CanvasJS.Chart(\"chartContainer\",
-  	{
-                  animationEnabled: true,
-  		data: [
-  		{
-  			type: \"doughnut\",
-  			startAngle: 60,
-  			toolTipContent: \"{legendText}: {y} - <strong>#percent% </strong>\",
-  			showInLegend: false,
-  			dataPoints: [
-  				{y: 5, indexLabel: \"A #percent%\", legendText: \"A\" },
-  				{y: 8, indexLabel: \"B+ #percent%\", legendText: \"B+\" },
-  				{y: 12,  indexLabel: \"B #percent%\", legendText: \"B\" },
-          {y: 5, indexLabel: \"C+ #percent%\", legendText: \"C+\" },
-  				{y: 4, indexLabel: \"C #percent%\", legendText: \"C\" },
-  				{y: 2,  indexLabel: \"D+ #percent%\", legendText: \"D+\" },
-          {y: 2,  indexLabel: \"D #percent%\", legendText: \"D\" },
-          {y: 1,  indexLabel: \"F #percent%\", legendText: \"F\" }
-  			]
-  		}
-  		]
-  	});
+    <?php
+    //Year2015
+    $q = sprintf("SELECT A.semester, A.grade, S.semesterRec FROM adddrop A, subject S WHERE A.subjectID = %s and A.sectionNO = %s and A.subjectID = S.subjectID", $_GET["subjectID"], $_GET["sectionNo"]);
+    $result = $mysqli->query($q);
+    $count = 1;
+    $total = mysqli_num_rows($result);
+
+    $a1 = 0;
+    $bp1 = 0;
+    $b1 = 0;
+    $cp1 = 0;
+    $c1 = 0;
+    $dp1 = 0;
+    $d1 = 0;
+    $f1 = 0;
+
+    $a2 = 0;
+    $bp2 = 0;
+    $b2 = 0;
+    $cp2 = 0;
+    $c2 = 0;
+    $dp2 = 0;
+    $d2 = 0;
+    $f2 = 0;
+
+    while ($row = $result->fetch_assoc()) {
+        list($yearStudy, $semesterStudy) = explode("/", $row["semester"]);
+        list($yearSubject, $semesterSubject) = explode("/", $row["semesterRec"]);
+        $teachYear = 2;
+        if ($semesterSubject == 12)
+            $teachYear = 1;
+        if (($yearStudy == (date("Y") - ((date("m") <= 7) ? 1 : 0)) - ($teachYear / 2))
+            && ($semesterStudy == ((date("m") > 7) ? 1 : 2) - ($teachYear % 2))) {
+            if ($row["grade"] == "A")
+                $a1++;
+            else if ($row["grade"] == "B+")
+                $bp1++;
+            else if ($row["grade"] == "B")
+                $b1++;
+            else if ($row["grade"] == "C+")
+                $cp1++;
+            else if ($row["grade"] == "C")
+                $c1++;
+            else if ($row["grade"] == "D+")
+                $dp1++;
+            else if ($row["grade"] == "D")
+                $d1++;
+            else if ($row["grade"] == "F")
+                $f1++;
+        }
+
+        else if (($yearStudy == (date("Y") - ((date("m") <= 7) ? 1 : 0)) - $teachYear)
+               && ($semesterStudy == ((date("m") > 7) ? 1 : 2)) - ((2 * $teachYear) % 2)) {
+            if ($row["grade"] == "A")
+                $a2++;
+            else if ($row["grade"] == "B+")
+                $bp2++;
+            else if ($row["grade"] == "B")
+                $b2++;
+            else if ($row["grade"] == "C+")
+                $cp2++;
+            else if ($row["grade"] == "C")
+                $c2++;
+            else if ($row["grade"] == "D+")
+                $dp2++;
+            else if ($row["grade"] == "D")
+                $d2++;
+            else if ($row["grade"] == "F")
+                $f2++;
+        }
+    }
+
+    print("<script type=\"text/javascript\">
+    window.onload = function () {
+    var chart = new CanvasJS.Chart(\"chartContainer\",
+    {
+                animationEnabled: true,
+        data: [
+        {
+            type: \"doughnut\",
+            startAngle: 60,
+            toolTipContent: \"{legendText}: {y} - <strong>#percent% </strong>\",
+            showInLegend: false,
+            dataPoints: [");
+
+                if ($a1 + $bp1 + $b1 + $cp1 + $c1 + $dp1 + $d1 + $f1 == 0)
+                    print("{y: 1, indexLabel: \"NO ONE ENTER YOUR COURSE\", legendText: \"hello\"}");
+                else
+                    print("{y: ".$a1.", indexLabel: \"A #percent%\", legendText: \"A\" },
+                    {y: ".$bp1.", indexLabel: \"B+ #percent%\", legendText: \"B+\" },
+                    {y: ".$b1.", indexLabel: \"B #percent%\", legendText: \"B\" },
+                    {y: ".$cp1.", indexLabel: \"C+ #percent%\", legendText: \"C+\" },
+                    {y: ".$c1.", indexLabel: \"C #percent%\", legendText: \"C\" },
+                    {y: ".$dp1.", indexLabel: \"D+ #percent%\", legendText: \"D+\" },
+                    {y: ".$d1.", indexLabel: \"D #percent%\", legendText: \"D\" },
+                    {y: ".$f1.", indexLabel: \"F #percent%\", legendText: \"F\" }");
+                print("
+                
+            ]
+        }
+        ]
+    });
   	chart.render();
 
     var chart2 = new CanvasJS.Chart(\"chartContainer2\",
@@ -76,15 +152,21 @@
      startAngle: 60,
      toolTipContent: \"{legendText}: {y} - <strong>#percent% </strong>\",
      showInLegend: false,
-     dataPoints: [
-       {y: 5, indexLabel: \"A #percent%\", legendText: \"A\" },
-       {y: 8, indexLabel: \"B+ #percent%\", legendText: \"B+\" },
-       {y: 12,  indexLabel: \"B #percent%\", legendText: \"B\" },
-       {y: 5, indexLabel: \"C+ #percent%\", legendText: \"C+\" },
-       {y: 4, indexLabel: \"C #percent%\", legendText: \"C\" },
-       {y: 2,  indexLabel: \"D+ #percent%\", legendText: \"D+\" },
-       {y: 2,  indexLabel: \"D #percent%\", legendText: \"D\" },
-       {y: 1,  indexLabel: \"F #percent%\", legendText: \"F\" }
+     dataPoints: [");
+
+         if ($a2 + $bp2 + $b2 + $cp2 + $c2 + $dp2 + $d2 + $f2 == 0)
+            print("{y: 1, indexLabel: \"NO ONE ENTER YOUR COURSE\", legendText: \"hello\"}");
+        else
+            print("{y: ".$a2.", indexLabel: \"A #percent%\", legendText: \"A\" },
+            {y: ".$bp2.", indexLabel: \"B+ #percent%\", legendText: \"B+\" },
+            {y: ".$b2.", indexLabel: \"B #percent%\", legendText: \"B\" },
+            {y: ".$cp2.", indexLabel: \"C+ #percent%\", legendText: \"C+\" },
+            {y: ".$c2.", indexLabel: \"C #percent%\", legendText: \"C\" },
+            {y: ".$dp2.", indexLabel: \"D+ #percent%\", legendText: \"D+\" },
+            {y: ".$d2.", indexLabel: \"D #percent%\", legendText: \"D\" },
+            {y: ".$f2.", indexLabel: \"F #percent%\", legendText: \"F\" }");
+        print("
+
      ]
    }
    ]
@@ -218,7 +300,11 @@
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="x_panel">
                                 <div class="x_title">
-                                    <h2>GPA Year 2015</h2>
+                                    <h2>
+                                        <?php
+                                            printf("GPA Year %s Semester %s", (date("Y") - ((date("m") <= 7) ? 1 : 0)) - ($teachYear / 2), ((date("m") > 7) ? 1 : 2) - ($teachYear % 2));
+                                        ?>
+                                    </h2>
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content2">
@@ -229,7 +315,11 @@
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="x_panel">
                                 <div class="x_title">
-                                    <h2>GPA Year 2016</h2>
+                                    <h2>
+                                        <?php
+                                            printf("GPA Year %s Semester %s", (date("Y") - ((date("m") <= 7) ? 1 : 0)) - $teachYear, ((date("m") > 7) ? 1 : 2) - ((2 * $teachYear) % 2));
+                                        ?>
+                                    </h2>
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content2">
