@@ -45,7 +45,43 @@
    ?>
 
     <?php
+    $q = "SELECT sex, entyear FROM student";
+    $result = $mysqli->query($q);
+    $count = 1;
+    $total = mysqli_num_rows($result);
 
+    $m1 = 0;
+    $f1 = 0;
+    $m2 = 0;
+    $f2 = 0;
+    $m3 = 0;
+    $f3 = 0;
+    $m4 = 0;
+    $f4 = 0;
+
+    while ($row = $result->fetch_assoc()) {
+        $year = (date("Y") - $row["entyear"]) + ((date("m") > 7) ? 1 : 0);
+        if (strcasecmp($row["sex"], "male") == 0) {
+            if ($year == 1)
+                $m1++;
+            else if ($year == 2)
+                $m2++;
+            else if ($year == 3)
+                $m3++;
+            else if ($year == 4)
+                $m4++;
+        }
+        else {
+            if ($year == 1)
+                $f1++;
+            else if ($year == 2)
+                $f2++;
+            else if ($year == 3)
+                $f3++;
+            else if ($year == 4)
+                $f4++;
+        }
+    }
 
     //Year 1
     print("<script type=\"text/javascript\">
@@ -66,12 +102,12 @@
         {
             type: \"pie\",
             showInLegend: false,
-            toolTipContent: \"{name}: <strong>{y}%</strong>\",
+            toolTipContent: \"{name}: <strong>{y}</strong>\",
             indexLabel: \"{name} {y}%\",
             dataPoints: [");
 
-            printf("{  y: %d, name: \"Male\", exploded: true}," , 70);
-            printf("{  y: %d, name: \"Female\"}", 30);
+            printf("{  y: %d, name: \"Male\", exploded: true}," , $m1);
+            printf("{  y: %d, name: \"Female\"}", $f1);
             print("
             ]
         }
@@ -99,8 +135,8 @@
             indexLabel: \"{name} {y}%\",
             dataPoints: [");
 
-            printf("{  y: %d, name: \"Male\", exploded: true}," , 70);
-            printf("{  y: %d, name: \"Female\"}", 30);
+            printf("{  y: %d, name: \"Male\", exploded: true}," , $m2);
+            printf("{  y: %d, name: \"Female\"}", $f2);
             print("
             ]
         }
@@ -128,8 +164,8 @@
             indexLabel: \"{name} {y}%\",
             dataPoints: [");
 
-            printf("{  y: %d, name: \"Male\", exploded: true}," , 70);
-            printf("{  y: %d, name: \"Female\"}", 30);
+            printf("{  y: %d, name: \"Male\", exploded: true}," , $m3);
+            printf("{  y: %d, name: \"Female\"}", $f3);
             print("
             ]
         }
@@ -157,8 +193,8 @@
             indexLabel: \"{name} {y}%\",
             dataPoints: [");
 
-            printf("{  y: %d, name: \"Male\", exploded: true}," , 70);
-            printf("{  y: %d, name: \"Female\"}", 30);
+            printf("{  y: %d, name: \"Male\", exploded: true}," , $m4);
+            printf("{  y: %d, name: \"Female\"}", $f4);
             print("
             ]
         }
