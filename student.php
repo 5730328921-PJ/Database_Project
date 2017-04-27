@@ -111,16 +111,143 @@
             color: \"rgba(0,75,141,0.7)\",
             markerSize: 0,
             label: \"\",
-            dataPoints: [
+            dataPoints: [");
 
-            {label: \"Year1 Term1\", y: 12  },
-            {label: \"Year1 Term2\" , y: 10},
-            {label: \"Year2 Term1\" , y: 3},
-            {label: \"Year2 Term2\" , y: 5},
-            {label: \"Year3 Term1\" , y: 2},
-            {label: \"Year3 Term2\", y: 1},
-            {label: \"Year4 Term1\" , y: 3},
-            {label: \"Year4 Term2\", y: 6}
+                $q = sprintf("SELECT S.entyear, A.semester, A.grade, SU.credits FROM student S, adddrop A, subject SU WHERE S.studentID = %s and S.studentID = A.studentID and A.subjectID = SU.subjectID", STUDENT_ID);
+                $result = $mysqli->query($q);
+                $count = 1;
+                $total = mysqli_num_rows($result);
+
+                $gpax11 = 0;
+                $gpax12 = 0;
+                $gpax21 = 0;
+                $gpax22 = 0;
+                $gpax31 = 0;
+                $gpax32 = 0;
+                $gpax41 = 0;
+                $gpax42 = 0;
+
+                $credits11 = 0;
+                $credits12 = 0;
+                $credits21 = 0;
+                $credits31 = 0;
+                $credits32 = 0;
+                $credits41 = 0;
+                $credits42 = 0;
+
+                while ($row = $result->fetch_assoc()) {
+                    list($year, $semester) = explode("/", $row["semester"]);
+                    $year = $year - $row["entyear"] + 1;
+                    $grade = -1;
+                    if ($row["grade"] == "A")
+                        $grade = 4;
+                    else if ($row["grade"] == "B+")
+                        $grade = 3.5;
+                    else if ($row["grade"] == "B")
+                        $grade = 3;
+                    else if ($row["grade"] == "C+")
+                        $grade = 2.5;
+                    else if ($row["grade"] == "C")
+                        $grade = 2;
+                    else if ($row["grade"] == "D+")
+                        $grade = 1.5;
+                    else if ($row["grade"] == "D")
+                        $grade = 1;
+                    else if ($row["grade"] == "F")
+                        $grade = 0;
+                    
+                    if ($grade != -1) {
+                        if ($year == 1 && $semester == 1) {
+                            $gpax11 += $grade * $row["credits"];
+                            $credits11 += $row["credits"];
+                        }
+                        else if ($year == 1 && $semester == 2) {
+                            $gpax12 += $grade * $row["credits"];
+                            $credits12 += $row["credits"];
+                        }
+                        else if ($year == 2 && $semester == 1) {
+                            $gpax21 += $grade * $row["credits"];
+                            $credits21 += $row["credits"];
+                        }
+                        else if ($year == 2 && $semester == 2) {
+                            $gpax22 += $grade * $row["credits"];
+                            $credits22 += $row["credits"];
+                        }
+                        else if ($year == 3 && $semester == 1) {
+                            $gpax31 += $grade * $row["credits"];
+                            $credits31 += $row["credits"];
+                        }
+                        else if ($year == 3 && $semester == 2) {
+                            $gpax32 += $grade * $row["credits"];;
+                            $credits32 += $row["credits"];
+                        }
+                        else if ($year == 4 && $semester == 1) {
+                            $gpax41 += $grade * $row["credits"];
+                            $credits41 += $row["credits"];
+                        }
+                        else if ($year == 4 && $semester == 2) {
+                            $gpax42 += $grade * $row["credits"];
+                            $credits42 += $row["credits"];
+                        }
+                    }
+                }
+                if ($credits11 != 0)
+                    $gpax11 /= $credits11;
+
+                $gpax12 += $gpax11 * $credits11;
+                $credits12 += $credits11;
+                if ($credits12 != 0)
+                    $gpax12 /= $credits12;
+
+                $gpax21 += $gpax12 * $credits12;
+                $credits21 += $credits12;
+                if ($credits21 != 0)
+                    $gpax21 /= $credits21;
+
+                $gpax22 += $gpax21 * $credits21;
+                $credits22 += $credits21;
+                if ($credits22 != 0)
+                    $gpax22 /= $credits22;
+                
+                $gpax31 += $gpax22 * $credits22;
+                $credits31 += $credits22;
+                if ($credits31 != 0)
+                    $gpax31 /= $credits31;
+                
+                $gpax32 += $gpax31 * $credits31;
+                $credits32 += $credits31;
+                if ($credits32 != 0)
+                    $gpax32 /= $credits32;
+                
+                $gpax41 += $gpax32 * $credits32;
+                $credits41 += $credits32;
+                if ($credits41 != 0)
+                    $gpax41 /= $credits41;
+                
+                $gpax42 += $gpax41 * $credits41;
+                $credits42 += $credits41;
+                if ($credits42 != 0)
+                    $gpax42 /= $credits42;
+
+                printf("{label: \"Year 1 Term 1\", y: %.2f},", $gpax11);
+                printf("{label: \"Year 1 Term 2\", y: %.2f},", $gpax12);
+                printf("{label: \"Year 2 Term 1\", y: %.2f},", $gpax21);
+                printf("{label: \"Year 2 Term 2\", y: %.2f},", $gpax22);
+                printf("{label: \"Year 3 Term 1\", y: %.2f},", $gpax31);
+                printf("{label: \"Year 3 Term 2\", y: %.2f},", $gpax32);
+                printf("{label: \"Year 4 Term 1\", y: %.2f},", $gpax41);
+                printf("{label: \"Year 4 Term 2\", y: %.2f},", $gpax42);
+                print("
+
+            // {label: \"Year1 Term1\", y: 12  },
+            // {label: \"Year1 Term2\" , y: 10},
+            // {label: \"Year2 Term1\" , y: 3},
+            // {label: \"Year2 Term2\" , y: 5},
+            // {label: \"Year3 Term1\" , y: 2},
+            // {label: \"Year3 Term2\", y: 1},
+            // {label: \"Year4 Term1\" , y: 3},
+            // {label: \"Year4 Term2\", y: 6}
+
             ]
         }
         ]
