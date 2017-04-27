@@ -181,7 +181,7 @@
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Sex</label>
                                         <div class="col-md-9 col-sm-9 col-xs-12" style="margin: 0px 0px 15px 0px">
                                             <select class="form-control" name="sex">
-                                                <option>ALL</option>
+                                                <option value="">ALL</option>
                                                 <option>Male</option>
                                                 <option>Female</option>
                                             </select>
@@ -242,17 +242,19 @@
 
                                     <tbody>
                                       <?php
-                                      $q="SELECT ST.image, ST.studentID, ST.firstName, ST.lastName, A.grade, SU.credits FROM student ST, subject SU, adddrop A WHERE ST.studentID = A.studentID AND SU.subjectID = A.subjectID";
+                                      $q="SELECT ST.studentID, A.grade, SU.credits FROM student ST, subject SU, adddrop A WHERE ST.studentID = A.studentID AND SU.subjectID = A.subjectID";
                                       $result = $mysqli->query($q);
-                                      $count =1;
-                                      $total= mysqli_num_rows($result);
-                                      $q2="SELECT image, studentID, firstName, lastName FROM student";
+                                      $count = 1;
+                                      $total = mysqli_num_rows($result);
+                                      $q2="SELECT image, studentID, firstName, lastName, sex FROM student";
                                       $result2 = $mysqli->query($q2);
+                                      $count2 = 1;
+                                      $total = mysqli_num_rows($result2);
                                       while($row = $result2->fetch_assoc()) {
                                         if((strcasecmp($row["studentID"],$_GET["sid"])==0 || $_GET["sid"]=="")
                                             && (strcasecmp($row["firstName"],$_GET["fname"])==0 || $_GET["fname"]=="")
                                             && (strcasecmp($row["lastName"],$_GET["lname"])==0 || $_GET["lname"]=="")
-                                            && (strcasecmp($row["sex"], $_GET["sex"]) == 0 || strcasecmp($_GET["sex"], "ALL") == 0)
+                                            && (strcasecmp($row["sex"], $_GET["sex"]) == 0 || $_GET["sex"] == "")
                                             && (strcasecmp(substr($row["studentID"], 0, -8), $_GET["year"]) == 0 || $_GET["year"]=="")) {
                                             $gpax = 0;
                                             $credits = 0;
@@ -285,7 +287,7 @@
                                             if ($credits != 0)
                                                 $gpax /= $credits;
 
-                                            if (($_GET["gpax"] - $gpax <= 1 && $_GET["gpax"] - $gpax >= 0) || $_GET["gpax"] == 0) {
+                                            if (($_GET["gpax"] - $gpax <= 1 && $_GET["gpax"] - $gpax >= 0) || $_GET["gpax"] == "") {
                                                 if($count%2==0){
                                                 printf("<tr class=\"even pointer\" onclick=\"window.document.location='student.php?login=%s&studentID=%s';\">", $_GET["login"], $row["studentID"]);
                                                 printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
