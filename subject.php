@@ -125,7 +125,7 @@
             dataPoints: [");
 
                 if ($a1 + $bp1 + $b1 + $cp1 + $c1 + $dp1 + $d1 + $f1 == 0)
-                    print("{y: 1, indexLabel: \"NO ONE ENTER YOUR COURSE\", legendText: \"hello\"}");
+                    print("{y: 1, indexLabel: \"NO ONE ENTER YOUR COURSE\", legendText: \"NO ONE\"}");
                 else
                     print("{y: ".$a1.", indexLabel: \"A #percent%\", legendText: \"A\" },
                     {y: ".$bp1.", indexLabel: \"B+ #percent%\", legendText: \"B+\" },
@@ -155,7 +155,7 @@
      dataPoints: [");
 
          if ($a2 + $bp2 + $b2 + $cp2 + $c2 + $dp2 + $d2 + $f2 == 0)
-            print("{y: 1, indexLabel: \"NO ONE ENTER YOUR COURSE\", legendText: \"hello\"}");
+            print("{y: 1, indexLabel: \"NO ONE ENTER YOUR COURSE\", legendText: \"NO ONE\"}");
         else
             print("{y: ".$a2.", indexLabel: \"A #percent%\", legendText: \"A\" },
             {y: ".$bp2.", indexLabel: \"B+ #percent%\", legendText: \"B+\" },

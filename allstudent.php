@@ -246,7 +246,7 @@
                                         $result = $mysqli->query($q);
                                         $count = 1;
                                         $total = mysqli_num_rows($result);
-                                        $q2="SELECT image, studentID, firstName, lastName, teacherID, sex FROM student";
+                                        $q2="SELECT image, studentID, firstName, lastName, teacherID, sex FROM student ORDER BY studentID ASC";
                                         $result2 = $mysqli->query($q2);
                                         $count2 = 1;
                                         $total = mysqli_num_rows($result2);
