@@ -168,32 +168,18 @@
                                         </thead>
 
                                         <tbody>
-                                          <?php
-                                          $q="SELECT S.image, S.studentID, S.firstName, S.lastName, D.note, D.scorededuction, D.date, D.time FROM student S, deduct D WHERE S.studentID = D.studentID ORDER BY D.date, D.time ASC";
-                                          $result = $mysqli->query($q);
-                                          $total = mysqli_num_rows($result);
-                                          $count = 1;
-                                          while($row = $result->fetch_assoc()) {
-                                            $timediff = (strtotime(date("Y-m-d")) - strtotime($row["date"])) / (60 * 60 * 24); 
-                                            if ($timediff <= 7 && $timediff >= 0) {
-                                                if($count%2==0){
-                                                echo "<tr class=\"even pointer\" onclick=\"window.document.location='student.php';\">";
-                                                printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
-                                                printf("<td >%s</td>
-                                                    <td >%s</td>
-                                                    <td >%s</td>
-                                                    <td >%s</td>
-                                                    <td >-%s</td>
-                                                    <td >%s</td>
-                                                    <td >%s</td>
-                                                    </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["note"],$row["scorededuction"],$row["date"],$row["time"]);
-                                                echo"</tr>";
-                                                $i++;
-                                                }
-                                                else{
-                                                echo "<tr class=\"odd pointer\" onclick=\"window.document.location='student.php';\">";
-                                                printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
-                                                printf("<td >%s</td>
+                                            <?php
+                                            $q="SELECT S.image, S.studentID, S.firstName, S.lastName, D.note, D.scorededuction, D.date, D.time FROM student S, deduct D WHERE S.studentID = D.studentID ORDER BY D.date, D.time ASC";
+                                            $result = $mysqli->query($q);
+                                            $total = mysqli_num_rows($result);
+                                            $count = 0;
+                                            while($row = $result->fetch_assoc()) {
+                                                $timediff = (strtotime(date("Y-m-d")) - strtotime($row["date"])) / (60 * 60 * 24); 
+                                                if ($timediff <= 7 && $timediff >= 0) {
+                                                    if($count%2==0){
+                                                    printf("<tr class=\"even pointer\" onclick=\"window.document.location='student.php?login=%s&studentID=%s';\">", $_GET["login"], $row["studentID"]);
+                                                    printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
+                                                    printf("<td >%s</td>
                                                         <td >%s</td>
                                                         <td >%s</td>
                                                         <td >%s</td>
@@ -201,11 +187,27 @@
                                                         <td >%s</td>
                                                         <td >%s</td>
                                                         </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["note"],$row["scorededuction"],$row["date"],$row["time"]);
-                                                echo"</tr>";
-                                                $i++;
+                                                    echo"</tr>";
+                                                    $i++;
+                                                    }
+                                                    else{
+                                                    printf("<tr class=\"even pointer\" onclick=\"window.document.location='student.php?login=%s&studentID=%s';\">", $_GET["login"], $row["studentID"]);
+                                                    printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
+                                                    printf("<td >%s</td>
+                                                            <td >%s</td>
+                                                            <td >%s</td>
+                                                            <td >%s</td>
+                                                            <td >-%s</td>
+                                                            <td >%s</td>
+                                                            <td >%s</td>
+                                                            </td>",$row["studentID"],$row["firstName"],$row["lastName"],$row["note"],$row["scorededuction"],$row["date"],$row["time"]);
+                                                    echo"</tr>";
+                                                    $i++;
+                                                    }
                                                 }
                                             }
-                                          }
+                                            if (!$count)
+                                                printf("<td><td><td><td>NO RECENT DEDUCTED STUDENT<td><td><td></td></td></td></td></td></td></td>");
                                             ?>
                                         </tbody>
                                     </table>
@@ -235,15 +237,16 @@
                                             </tr>
                                         </thead>
 
+                                        
                                         <tbody>
                                             <?php
                                             $q="SELECT S.image, S.studentID, S.firstName, S.lastName, A.cause, A.date, A.period FROM student S, absent A WHERE S.studentID = A.studentID ORDER BY A.date, A.period ASC";
                                             $result = $mysqli->query($q);
                                             $total= mysqli_num_rows($result);
-                                            $count =1;
+                                            $count = 0;
                                             while($row = $result->fetch_assoc()) {
                                                 $timediff = (strtotime($row["date"]) - strtotime(date("Y-m-d"))) / (60 * 60 * 24);
-                                                if ($timediff <= 7 && $timediff >= 0) {
+                                                if ($timediff <= 7 && $timediff == 0) {
                                                     if($count%2==0){
                                                         echo "<tr class=\"even pointer\" onclick=\"window.document.location='student.php';\">";
                                                         printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
@@ -270,8 +273,11 @@
                                                         echo"</tr>";
                                                         $i++;
                                                     }
+                                                    $count++;
                                                 }
                                             }
+                                            if (!$count)
+                                                printf("<td><td><td><td>NO RECENT DEDUCTED STUDENT<td><td><td></td></td></td></td></td></td></td>");
                                             ?>
                                         </tbody>
                                     </table>
