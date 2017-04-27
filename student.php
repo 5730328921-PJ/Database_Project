@@ -547,7 +547,7 @@
                                                 </div>
                                                 <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
                                                     <table class="data table table-striped no-margin">
-                                                            <thread>
+                                                        <thead>
                                                             <tr>
                                                                 <th>#</th>
                                                                 <th>Competition Name</th>
@@ -555,7 +555,7 @@
                                                                 <th>Place</th>
                                                                 <th>Date</th>
                                                             </tr>
-                                                        </thread>
+                                                        </thead>
                                                         <tbody>
                                                             <?php
                                                                 $q = sprintf("SELECT C.*, P.* FROM competition C, participatec P WHERE P.studentID = %s and C.competitionName = P.competitionName", STUDENT_ID);
