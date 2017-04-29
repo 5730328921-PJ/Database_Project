@@ -71,7 +71,7 @@
         $teachYear = 2;
         if ($semesterSubject == 12)
             $teachYear = 1;
-        if (($yearStudy == (date("Y") - ((date("m") <= 7) ? 1 : 0)) - ($teachYear / 2))
+        if (($yearStudy == (date("Y") - ((date("m") <= 7) ? 1 : 0)) - floor($teachYear / 2))
             && ($semesterStudy == ((date("m") > 7) ? 1 : 2) - ($teachYear % 2))) {
             if ($row["grade"] == "A")
                 $a1++;
@@ -312,7 +312,7 @@
                                 <div class="x_title">
                                     <h2>
                                         <?php
-                                            printf("GPA Year %s Semester %s", (date("Y") - ((date("m") <= 7) ? 1 : 0)) - ($teachYear / 2), ((date("m") > 7) ? 1 : 2) - ($teachYear % 2));
+                                            printf("GPA Year %s Semester %s", (date("Y") - ((date("m") <= 7) ? 1 : 0)) - floor($teachYear / 2), ((date("m") > 7) ? 1 : 2) - ($teachYear % 2));
                                         ?>
                                     </h2>
                                     <div class="clearfix"></div>
