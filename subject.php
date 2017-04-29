@@ -292,7 +292,16 @@
                     </h1>
                     <!--<h1>&nbsp;2301710 DATABASE &nbsp;(SEC33)</h1>-->
                     <div class="col-md-2 col-sm-12 col-xs-12" style="margin: 5px 0px 0px 20px">
-                        <a class="btn btn-info"></i>Download syllabus</a>
+                        <?php
+                            $q = sprintf("SELECT syllabus FROM subject S WHERE S.subjectID = \"%s\"", $_GET["subjectID"]);
+                            $result = $mysqli->query($q);
+                            $count = 1;
+                            $total = mysqli_num_rows($result);
+                            while ($row = $result->fetch_assoc()) {
+                                print("<a class=\"btn btn-info\" onclick=\"window.document.location='syllabus/".$row["syllabus"]."';\"></i>Download syllabus</a>");
+                            }
+                        ?>
+                        <!--<a class="btn btn-info" onclick="window.document.location='syllabus/s1.pdf';"></i>Download syllabus</a>-->
                     </div>
 
                     <!-- pie chart -->
