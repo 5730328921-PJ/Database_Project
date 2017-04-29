@@ -26,10 +26,11 @@
     if ($_GET["login"] == null)
         echo "<meta http-equiv=\"refresh\" content=\"0;url=login.php\" />";
 
-    DEFINE('DB_USERNAME', 'root');
-    DEFINE('DB_PASSWORD', 'root');
-    DEFINE('DB_HOST', 'localhost');
-    DEFINE('DB_DATABASE', 'CPstudent CARE');
+    // DEFINE('DB_USERNAME', 'root');
+    // DEFINE('DB_PASSWORD', 'root');
+    // DEFINE('DB_HOST', 'localhost');
+    // DEFINE('DB_DATABASE', 'CPstudent CARE');
+    include "setsql.php";
     $mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
     $q = sprintf("SELECT teacherID, image, pfname, plname FROM teacher WHERE login = \"%s\"", $_GET["login"]);
