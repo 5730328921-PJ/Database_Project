@@ -5,7 +5,7 @@
     DEFINE('DB_DATABASE', 'CPstudent CARE');
     $mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
-    $q = sprintf("SELECT password FROM teacher WHERE login = %s", $_GET["login"]);
+    $q = sprintf("SELECT password FROM teacher WHERE login = \"%s\"", $_GET["login"]);
     $result = $mysqli->query($q);
     $count = 1;
     $total = mysqli_num_rows($result);

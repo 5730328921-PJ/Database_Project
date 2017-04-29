@@ -252,8 +252,8 @@
                                         $total = mysqli_num_rows($result2);
                                         while($row = $result2->fetch_assoc()) {
                                             if((strcasecmp($row["studentID"],$_GET["sid"])==0 || $_GET["sid"]=="")
-                                                && (strcasecmp($row["firstName"],$_GET["fname"])==0 || $_GET["fname"]=="")
-                                                && (strcasecmp($row["lastName"],$_GET["lname"])==0 || $_GET["lname"]=="")
+                                                && (strcasecmp(trim($row["firstName"]),trim($_GET["fname"]))==0 || $_GET["fname"]=="")
+                                                && (strcasecmp(trim($row["lastName"]),trim($_GET["lname"]))==0 || $_GET["lname"]=="")
                                                 && (strcasecmp($row["sex"], $_GET["sex"]) == 0 || $_GET["sex"] == "")
                                                 && (strcasecmp(substr($row["studentID"], 0, -8), $_GET["year"]) == 0 || $_GET["year"]=="")
                                                 && (!$_GET["adviser"] || ($_GET["adviser"] && $row["teacherID"] == TEACHER_ID))) {
