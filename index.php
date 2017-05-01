@@ -538,7 +538,7 @@
 
                                         <tbody>
                                           <?php
-                                            $q="SELECT S.image, S.studentID, S.firstName, S.lastName, D.note, D.scorededuction, D.date, D.time FROM student S, deduct D WHERE S.studentID = D.studentID ORDER BY D.date, D.time ASC";
+                                            $q="SELECT S.image, S.studentID, S.firstName, S.lastName, D.note, D.scorededuction, D.date, D.time FROM student S, deduct D WHERE S.studentID = D.studentID ORDER BY D.date ASC, D.time DESC";
                                             $result = $mysqli->query($q);
                                             $total = mysqli_num_rows($result);
                                             $count = 1;
@@ -612,8 +612,9 @@
                                           $total= mysqli_num_rows($result);
                                           $count = 1;
                                           while($row = $result->fetch_assoc()) {
-                                              $timediff = (strtotime(date("Y-m-d")) - strtotime($row["date"])) / (60 * 60 * 24);
-                                              if ($timediff <= 7 && $timediff >= 0) {
+                                              $timediffStart = (strtotime($row["date"]) - strtotime(date("Y-m-d"))) / (60 * 60 * 24);
+                                              $timediffEnd = ((strtotime($row["date"]) - strtotime(date("Y-m-d"))) / (60 * 60 * 24)) + $row["period"];
+                                              if ($timediffStart <= 7 && $timediffEnd >= 0) {
                                                   if($count%2==0){
                                                       printf("<tr class=\"even pointer\" onclick=\"window.document.location='student.php?login=%s&studentID=%s';\">", $_GET["login"], $row["studentID"]);
                                                       printf("<td ><img src=\"images/%s.jpg\" style=\"width:60px;height:60px;\"></td>",$row["image"]);
